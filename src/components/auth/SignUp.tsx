@@ -7,8 +7,11 @@ import { Label } from '@/components/ui/label';
 import { signUpSchema } from '@/utils/validationSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { signUp } from 'aws-amplify/auth';
+import { useOneTimePassStore } from '@/store/oneTimePassStore';
 
 function SignUp() {
+	const { setOneTimePassTrue } = useOneTimePassStore();
+
 	const {
 		register,
 		handleSubmit,
@@ -34,6 +37,8 @@ function SignUp() {
 				},
 			});
 			console.log('Sign Up', userData);
+			setOneTimePassTrue();
+			console.log('Pass Code');
 		} catch (error) {
 			console.error('Error during sign up:', error);
 		}
@@ -87,7 +92,9 @@ function SignUp() {
 					</div>
 				</CardContent>
 				<CardFooter>
-					<Button className="w-full">Submit</Button>
+					<Button type="submit" className="w-full">
+						Submit
+					</Button>
 				</CardFooter>
 			</form>
 		</Card>

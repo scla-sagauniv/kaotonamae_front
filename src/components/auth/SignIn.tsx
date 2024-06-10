@@ -56,7 +56,7 @@ function SignIn() {
 						</div>
 					</CardContent>
 					<CardFooter>
-						<Button className="w-full" type="submit">
+						<Button type="submit" className="w-full">
 							Submit
 						</Button>
 					</CardFooter>
