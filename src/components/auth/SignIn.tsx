@@ -27,7 +27,7 @@ function SignIn() {
 				password: data.password,
 			});
 			console.log('Sign In', userData);
-			router.push('/');
+			router.push('/Main');
 		} catch (error) {
 			console.error('Error during sign in:', error);
 		}
