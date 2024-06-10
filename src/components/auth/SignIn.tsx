@@ -6,8 +6,11 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { signInSchema } from '@/utils/validationSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { signIn } from 'aws-amplify/auth';
+import { useRouter } from 'next/navigation';
 
 function SignIn() {
+	const router = useRouter();
 	const {
 		register,
 		handleSubmit,
@@ -17,9 +20,17 @@ function SignIn() {
 		resolver: zodResolver(signInSchema),
 	});
 
-	const onSubmit = (data: SignInType) => {
-		console.log('Sign In');
-		console.log(data);
+	const onSubmit = async (data: SignInType) => {
+		try {
+			const userData = await signIn({
+				username: data.email,
+				password: data.password,
+			});
+			console.log('Sign In', userData);
+			router.push('/');
+		} catch (error) {
+			console.error('Error during sign in:', error);
+		}
 	};
 	return (
 		<>
