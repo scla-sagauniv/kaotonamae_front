@@ -8,3 +8,7 @@ export type SignUpType = {
 	password: string;
 	confirmPassword: string;
 };
+
+export type OneTimePassType = {
+	otp: string;
+};

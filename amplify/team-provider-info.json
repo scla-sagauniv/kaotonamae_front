@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-kaotonamae-dev-c030a-authRole",
+      "UnauthRoleArn": "arn:aws:iam::101913536879:role/amplify-kaotonamae-dev-c030a-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::101913536879:role/amplify-kaotonamae-dev-c030a-authRole",
+      "Region": "ap-northeast-1",
+      "DeploymentBucketName": "amplify-kaotonamae-dev-c030a-deployment",
+      "UnauthRoleName": "amplify-kaotonamae-dev-c030a-unauthRole",
+      "StackName": "amplify-kaotonamae-dev-c030a",
+      "StackId": "arn:aws:cloudformation:ap-northeast-1:101913536879:stack/amplify-kaotonamae-dev-c030a/d01baa00-2639-11ef-95d0-06b6d1542feb",
+      "AmplifyAppId": "d3s0z8lyau6n1w"
+    },
+    "categories": {
+      "auth": {
+        "kaotonamae0e327acd": {}
+      }
+    }
+  }
+}
