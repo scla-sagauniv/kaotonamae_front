@@ -35,7 +35,7 @@ function Auth() {
 			console.log('Confirm Sign Up', confirmData);
 			setOneTimePassFalse();
 			setConfirmEmail('');
-			router.push('/Main');
+			router.push('/');
 		} catch (error) {
 			console.error('Error during confirm sign up:', error);
 			console.log(data.otp);
