@@ -23,7 +23,6 @@ function Auth() {
 	const router = useRouter();
 	const {
 		isOneTimePass,
-		setOneTimePassFalse,
 		confirmEmail,
 		setConfirmEmail,
 		confirmPassword,
@@ -43,7 +42,7 @@ function Auth() {
 				username: confirmEmail,
 				password: confirmPassword,
 			});
-			setOneTimePassFalse();
+			console.log('Sign In', userData);
 			setConfirmEmail('');
 			setConfirmPassword('');
 			router.push('/');
