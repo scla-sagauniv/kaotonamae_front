@@ -6,6 +6,8 @@ import { getCurrentUser } from 'aws-amplify/auth';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { useOneTimePassStore } from '@/store/oneTimePassStore';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHome } from '@fortawesome/free-solid-svg-icons';
 
 export default function Home() {
 	const { isOneTimePass, setOneTimePassFalse } = useOneTimePassStore();
@@ -34,6 +36,7 @@ export default function Home() {
 
 	return (
 		<>
+			<FontAwesomeIcon icon={faHome} />
 			<Button onClick={handleSignOut}>ログアウト</Button>
 		</>
 	);
