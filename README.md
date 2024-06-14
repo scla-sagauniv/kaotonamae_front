@@ -1,3 +1,38 @@
+## Gitの流れ
+
+1. ステージングする(add)
+
+```
+git add .
+```
+
+2. ステージングできたかを確認する
+
+```
+git status
+```
+
+3. ローカルリポジトリを更新する(commit)
+
+```
+git commit -m "{任意のコミットメッセージ}"
+```
+
+4. commitできたかを確認
+
+```
+git log
+確認でき、ログが消えなかったら「q」を押下する
+```
+
+5. リモートリポジトリに反映させる
+
+```
+git push origin {ブランチ名}
+```
+
+## Next.js
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
