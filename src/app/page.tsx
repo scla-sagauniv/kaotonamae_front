@@ -1,13 +1,9 @@
 'use client';
 
-import { Button } from '@/components/ui/button';
-import { signOut } from 'aws-amplify/auth';
 import { getCurrentUser } from 'aws-amplify/auth';
-import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { useOneTimePassStore } from '@/store/oneTimePassStore';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHome } from '@fortawesome/free-solid-svg-icons';
+import Header from '@/components/Header';
 
 export default function Home() {
 	const { isOneTimePass, setOneTimePassFalse } = useOneTimePassStore();
@@ -23,21 +19,12 @@ export default function Home() {
 		fetchUser();
 	}, []);
 
-	const router = useRouter();
-	const handleSignOut = async () => {
-		try {
-			await signOut();
-			console.log('ログアウトしました');
-			router.push('/Auth');
-		} catch (error) {
-			console.error('Error signing out', error);
-		}
-	};
-
 	return (
 		<>
-			<FontAwesomeIcon icon={faHome} />
-			<Button onClick={handleSignOut}>ログアウト</Button>
+			<Header />
+			<div className="text-center mt-10">
+				<h1 className="text-4xl font-bold">Home</h1>
+			</div>
 		</>
 	);
 }
