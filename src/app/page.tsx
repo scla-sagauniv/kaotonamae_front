@@ -5,9 +5,13 @@ import { signOut } from 'aws-amplify/auth';
 import { getCurrentUser } from 'aws-amplify/auth';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
+import { useOneTimePassStore } from '@/store/oneTimePassStore';
 
 export default function Home() {
+	const { isOneTimePass, setOneTimePassFalse } = useOneTimePassStore();
 	useEffect(() => {
+		setOneTimePassFalse();
+		console.log('isOneTimePass: ', isOneTimePass);
 		const fetchUser = async () => {
 			const { userId, username, signInDetails } = await getCurrentUser();
 			console.log('user id: ', userId);
