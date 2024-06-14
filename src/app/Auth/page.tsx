@@ -14,15 +14,21 @@ import {
 	CardTitle,
 } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { confirmSignUp } from 'aws-amplify/auth';
+import { confirmSignUp, signIn } from 'aws-amplify/auth';
 import { OneTimePassType } from '@/types';
 import { Input } from '@/components/ui/input';
 import { useRouter } from 'next/navigation';
 
 function Auth() {
 	const router = useRouter();
-	const { isOneTimePass, setOneTimePassFalse, confirmEmail, setConfirmEmail } =
-		useOneTimePassStore();
+	const {
+		isOneTimePass,
+		setOneTimePassFalse,
+		confirmEmail,
+		setConfirmEmail,
+		confirmPassword,
+		setConfirmPassword,
+	} = useOneTimePassStore();
 
 	const { register, handleSubmit } = useForm<OneTimePassType>();
 
@@ -33,8 +39,13 @@ function Auth() {
 				confirmationCode: data.otp,
 			});
 			console.log('Confirm Sign Up', confirmData);
+			const userData = await signIn({
+				username: confirmEmail,
+				password: confirmPassword,
+			});
 			setOneTimePassFalse();
 			setConfirmEmail('');
+			setConfirmPassword('');
 			router.push('/');
 		} catch (error) {
 			console.error('Error during confirm sign up:', error);

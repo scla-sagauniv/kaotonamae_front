@@ -10,7 +10,8 @@ import { signUp } from 'aws-amplify/auth';
 import { useOneTimePassStore } from '@/store/oneTimePassStore';
 
 function SignUp() {
-	const { setOneTimePassTrue, setConfirmEmail } = useOneTimePassStore();
+	const { setOneTimePassTrue, setConfirmEmail, setConfirmPassword } =
+		useOneTimePassStore();
 
 	const {
 		register,
@@ -38,6 +39,7 @@ function SignUp() {
 			});
 			console.log('Sign Up', userData);
 			setConfirmEmail(data.email);
+			setConfirmPassword(data.password);
 			setOneTimePassTrue();
 			console.log('Pass Code');
 		} catch (error) {
