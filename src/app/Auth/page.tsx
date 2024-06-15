@@ -18,6 +18,8 @@ import { confirmSignUp, signIn } from 'aws-amplify/auth';
 import { OneTimePassType } from '@/types';
 import { Input } from '@/components/ui/input';
 import { useRouter } from 'next/navigation';
+import axios from 'axios';
+import { getCurrentUser } from 'aws-amplify/auth';
 
 function Auth() {
 	const router = useRouter();
@@ -44,6 +46,12 @@ function Auth() {
 			});
 			console.log('Sign In', userData);
 			setConfirmEmail('');
+			const { userId } = await getCurrentUser();
+			const res = await axios.post(
+				`${process.env.NEXT_PUBLIC_VITE_GO_APP_API_URL}/createUser/${userId}`,
+			);
+			console.log(res);
+			console.log(userId);
 			setConfirmPassword('');
 			router.push('/');
 		} catch (error) {
