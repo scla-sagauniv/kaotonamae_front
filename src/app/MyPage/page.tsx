@@ -106,6 +106,7 @@ const MyForm = () => {
 						{...register('lastName')}
 						placeholder="姓"
 						className="w-full p-2 border-gray-300 rounded-md"
+						disabled={!showForm}
 					/>
 					{errors.lastName && (
 						<p className="text-red-500 text-sm">{errors.lastName.message}</p>
@@ -118,6 +119,7 @@ const MyForm = () => {
 						{...register('firstName')}
 						placeholder="名"
 						className="w-full p-2 border-gray-300 rounded-md"
+						disabled={!showForm}
 					/>
 					{errors.firstName && (
 						<p className="text-red-500 text-sm">{errors.firstName.message}</p>
@@ -130,6 +132,7 @@ const MyForm = () => {
 						{...register('lastname_kana')}
 						placeholder="セイ"
 						className="w-full p-2 border-gray-300 rounded-md"
+						disabled={!showForm}
 					/>
 					{errors.lastname_kana && (
 						<p className="text-red-500 text-sm">
@@ -144,6 +147,7 @@ const MyForm = () => {
 						{...register('firstname_kana')}
 						placeholder="メイ"
 						className="w-full p-2 border-gray-300 rounded-md"
+						disabled={!showForm}
 					/>
 					{errors.firstname_kana && (
 						<p className="text-red-500 text-sm">
@@ -158,6 +162,7 @@ const MyForm = () => {
 						{...register('hobby')}
 						placeholder="趣味"
 						className="w-full p-2 border-gray-300 rounded-md"
+						disabled={!showForm}
 					/>
 					{errors.hobby && (
 						<p className="text-red-500 text-sm">{errors.hobby.message}</p>
@@ -172,6 +177,7 @@ const MyForm = () => {
 						{...register('organization')}
 						placeholder="所属組織"
 						className="w-full p-2 border-gray-300 rounded-md"
+						disabled={!showForm}
 					/>
 					{errors.organization && (
 						<p className="text-red-500 text-sm">
@@ -188,6 +194,7 @@ const MyForm = () => {
 						{...register('holidayactivity')}
 						placeholder="休日にやってること"
 						className="w-full p-2 border-gray-300 rounded-md"
+						disabled={!showForm}
 					/>
 					{errors.holidayactivity && (
 						<p className="text-red-500 text-sm">
@@ -204,6 +211,21 @@ const MyForm = () => {
 						{...register('weaknesses')}
 						placeholder="苦手なこと"
 						className="w-full p-2 border-gray-300 rounded-md"
+						disabled={!showForm}
+					/>
+					{errors.weaknesses && (
+						<p className="text-red-500 text-sm">{errors.weaknesses.message}</p>
+					)}
+				</div>
+				<div>
+					<label className="block text-gray-700 flont-bold mb-2">
+						苦手なこと
+					</label>
+					<Input
+						{...register('weaknesses')}
+						placeholder="苦手なこと"
+						className="w-full p-2 border-gray-300 rounded-md"
+						disabled={!showForm}
 					/>
 					{errors.weaknesses && (
 						<p className="text-red-500 text-sm">{errors.weaknesses.message}</p>
