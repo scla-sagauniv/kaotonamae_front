@@ -98,6 +98,7 @@ const MyForm = () => {
 			<Header />
 
 			{showForm ? <UserInfoForm /> : <UserInfo />}
+
 			<form onSubmit={handleSubmit(onSubmit)}>
 				<div>
 					<label className="block text-gray-700 flont-bold mb-2">姓</label>
@@ -209,12 +210,20 @@ const MyForm = () => {
 					)}
 				</div>
 				<Button
+					onClick={() => setShowForm(!showForm)}
 					type="submit"
-					className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-700"
+					className="w-full bg-black text-white py-2 rounded-md hover:bg-blue-700"
 				>
-					送信
+					{showForm ? 'フォームを非表示' : '編集'}
 				</Button>
-
+				{showForm && (
+					<Button
+						type="submit"
+						className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-700"
+					>
+						送信
+					</Button>
+				)}
 				{/* フォームの入力項目 */}
 				<Button
 					type="button"
