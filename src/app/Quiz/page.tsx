@@ -1,11 +1,8 @@
-import React from 'react';
+'use client';
+import Header from '@/components/Header';
 
 function Quiz() {
-	return (
-		<div>
-			<div>Quiz</div>
-		</div>
-	);
+	return <div className="h-screen w-screen"></div>;
 }
 
 export default Quiz;
