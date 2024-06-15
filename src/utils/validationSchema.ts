@@ -26,3 +26,11 @@ export const signInSchema = z.object({
 		.email('メールアドレスの形式が正しくありません'),
 	password: z.string().min(6, 'パスワードは6文字以上で入力してください'),
 });
+
+export const ProfileSchema = z.object({
+	lastName: z.string().min(1, '姓は必須です'),
+	firstName: z.string().min(1, '名は必須です'),
+	firstname_kana: z.string().min(1, 'メイは必須です'),
+	lastname_kana: z.string().min(1, 'セイは必須です'),
+	hobby: z.string().min(1, '趣味は必須です'),
+});
