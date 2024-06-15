@@ -37,7 +37,12 @@ function Friends() {
 					))}
 				</div>
 				<div className="flex flex-raw w-full justify-evenly absolute bottom-20">
-					<div className="flex flex-col items-center justify-evenly">
+					<div
+						onClick={() => {
+							router.push('/AddFriend');
+						}}
+						className="flex flex-col items-center justify-evenly"
+					>
 						<FontAwesomeIcon className="size-[100px]" icon={faUserPlus} />
 						<span className="text-[20px]">友達追加</span>
 					</div>
