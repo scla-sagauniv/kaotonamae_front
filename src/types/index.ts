@@ -12,3 +12,22 @@ export type SignUpType = {
 export type OneTimePassType = {
 	otp: string;
 };
+
+export type ProfileInfoType = {
+	lastName: string;
+	firstName: string;
+	lastname_kana: string;
+	firstname_kana: string;
+	hobby: string;
+	organization?: string;
+	holidayactivity?: string;
+	weaknesses?: string;
+	FavoriteColor?: string;
+	FavoriteAnimal?: string;
+	FavoritePlace?: string;
+	Language?: string;
+	Age?: string;
+	Birthday?: string;
+	Gender?: string;
+	Nickname?: string;
+};
