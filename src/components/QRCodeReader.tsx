@@ -1,6 +1,7 @@
 import { Html5Qrcode } from 'html5-qrcode';
 import Select from 'react-select';
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
 function QRCodeReader({
 	onScanSuccess,
@@ -9,6 +10,7 @@ function QRCodeReader({
 	onScanSuccess: any;
 	onScanFailure: any;
 }) {
+	const router = useRouter();
 	const qrcodeRegionId = 'html5qr-code-full-region';
 
 	const config = { fps: 1, qrbox: { width: 250, height: 250 } };
@@ -53,7 +55,11 @@ function QRCodeReader({
 			await Html5QrcodeScanner.start(
 				selectedCameraId,
 				config,
-				onScanSuccess,
+				(result: any) => {
+					onScanSuccess(result);
+					Html5QrcodeScanner.stop();
+					router.push('/Friends');
+				},
 				onScanFailure,
 			);
 			setHtml5QrcodeScanner(Html5QrcodeScanner);

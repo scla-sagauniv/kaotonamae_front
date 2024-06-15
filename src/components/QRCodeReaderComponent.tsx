@@ -1,10 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import QRCodeReader from '@/components/QRCodeReader';
 
 function QRCodeReaderComponent() {
 	const [scannedResult, setScannedResult] = useState('');
 
-	// QRコードを読み取った時の実行する関数
 	const onNewScanResult = (result: any) => {
 		console.log('QRコードスキャン結果');
 		console.log(result);
