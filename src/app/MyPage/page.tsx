@@ -26,6 +26,9 @@ import {
 } from '@/components/ui/popover';
 import { toast } from '@/components/ui/use-toast';
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import UserInfoForm from '@/components/mypage/UerInfoForm';
+import UserInfo from '@/components/mypage/UserInfo';
 
 // バリデーションスキーマの定義
 const FormSchema = z.object({
@@ -44,6 +47,21 @@ const FormSchema = z.object({
 type FormSchemaType = z.infer<typeof FormSchema>;
 
 const MyForm = () => {
+	// TODO apiからデータを取得
+	const demo: FormSchemaType = {
+		lastName: 'hajime',
+		firstName: 'hoshino',
+		lastname_kana: 'hajime',
+		firstname_kana: 'hoshino',
+		hobby: 'climbing',
+		organization: 'scla',
+		holidayactivity: 'sleeping',
+		weaknesses: 'English',
+	};
+
+	const [showForm, setShowForm] = useState<boolean>(false);
+
+	// TODO 編集ボタンクリックできりかえ
 	// useFormの初期化
 	const {
 		register,
@@ -55,14 +73,15 @@ const MyForm = () => {
 
 	// フォーム送信ハンドラー
 	const onSubmit = (data: FormSchemaType) => {
-		toast({
-			title: '以下の内容を送信しました:',
-			description: (
-				<pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-					<code className="text-white">{JSON.stringify(data, null, 2)}</code>
-				</pre>
-			),
-		});
+		console.log(data);
+		// toast({
+		// 	title: '以下の内容を送信しました:',
+		// 	description: (
+		// 		<pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+		// 			<code className="text-white">{JSON.stringify(data, null, 2)}</code>
+		// 		</pre>
+		// 	),
+		// });
 	};
 	const router = useRouter();
 	// const { handleSubmit : HOME } = useForm<inputs>({
@@ -77,6 +96,8 @@ const MyForm = () => {
 	return (
 		<>
 			<Header />
+
+			{showForm ? <UserInfoForm /> : <UserInfo />}
 			<form onSubmit={handleSubmit(onSubmit)}>
 				<div>
 					<label className="block text-gray-700 flont-bold mb-2">姓</label>
