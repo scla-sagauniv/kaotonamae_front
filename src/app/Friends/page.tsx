@@ -48,7 +48,7 @@ function Friends() {
 						className="flex flex-col items-center justify-center"
 					>
 						<FontAwesomeIcon className="size-[100px]" icon={faQrcode} />
-						<span className="text-[20px]">QRコード</span>
+						<span className="text-[20px]">マイQRコード</span>
 					</div>
 				</div>
 			</div>
