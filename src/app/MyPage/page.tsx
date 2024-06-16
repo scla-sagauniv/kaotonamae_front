@@ -12,15 +12,17 @@ const MyForm = () => {
 	return (
 		<>
 			<Header />
-			{isEdit ? <EditMyPage /> : <DisPlayMyPage />}
-			<Button
-				onClick={() => {
-					setIsEdit(!isEdit);
-				}}
-				className="w-1/2"
-			>
-				{isEdit ? '編集' : '戻る'}
-			</Button>
+			<div className="flex flex-col">
+				<Button
+					onClick={() => {
+						setIsEdit(!isEdit);
+					}}
+					className="w-[70px]"
+				>
+					{isEdit ? '戻る' : '編集'}
+				</Button>
+				<div>{isEdit ? <EditMyPage /> : <DisPlayMyPage />}</div>
+			</div>
 		</>
 	);
 };
