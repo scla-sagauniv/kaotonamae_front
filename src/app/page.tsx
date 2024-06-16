@@ -7,8 +7,11 @@ import { useOneTimePassStore } from '@/store/oneTimePassStore';
 import Header from '@/components/Header';
 import { GroupType } from '@/types/index';
 import Link from 'next/link'; // next/linkをインポート
+import { useRouter, useParams } from 'next/navigation';
+import { Button } from '@/components/ui/button';
 
 export default function Home() {
+	const router = useRouter();
 	const { isOneTimePass, setOneTimePassFalse } = useOneTimePassStore();
 	const [objects, setObjects] = useState<GroupType[]>([]);
 	const [error, setError] = useState<string | null>(null);
@@ -43,6 +46,24 @@ export default function Home() {
 		fetchUserAndGroups();
 	}, []);
 
+	const handleAddNewGroup = async () => {
+		try {
+			const { userId } = await getCurrentUser();
+			// Make API call to add new group
+			const res = await axios.post<GroupType[]>(
+				`${process.env.NEXT_PUBLIC_VITE_GO_APP_API_URL}/newGroup/${userId}`,
+			);
+
+			// Optionally, handle response if needed
+
+			// Reload the page
+			router.refresh();
+		} catch (error) {
+			console.error('Error adding new group:', error);
+			// Handle error as needed
+		}
+	};
+
 	return (
 		<div className="h-screen w-screen">
 			<Header />
@@ -56,8 +77,8 @@ export default function Home() {
 						objects.map((object) => (
 							<Link
 								key={object.groupId}
-								href={`/Group/${object.groupId}`} // href属性にページのパスを設定
-								passHref // リンク内の要素にhrefを渡す
+								href={`/Group/${object.groupId}`}
+								passHref
 								className="flex flex-row items-center border border-black h-[50px] space-x-2 w-full p-3"
 							>
 								<div className="rounded-full bg-gray-200 w-10 h-10 ml-2"></div>
@@ -71,6 +92,12 @@ export default function Home() {
 					)}
 				</div>
 			</div>
+			<Button
+				onClick={handleAddNewGroup} // Call handleAddNewGroup on button click
+				className="w-40 bg-blue-500 text-white py-2 rounded-md hover:bg-blue-700"
+			>
+				グループ新規追加
+			</Button>
 		</div>
 	);
 }
