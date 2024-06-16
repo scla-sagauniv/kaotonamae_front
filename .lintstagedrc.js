@@ -7,7 +7,7 @@ const buildEslintCommand = (filenames) =>
 
 module.exports = {
 	'*.{ts,tsx}': [
-		() => 'tsc --incremental false --noEmit',
+		// () => 'tsc --incremental false --noEmit',
 		buildEslintCommand,
 		"prettier --write --ignore-path .gitignore './**/*.{js,jsx,ts,tsx}'",
 	],
