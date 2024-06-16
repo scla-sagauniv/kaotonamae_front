@@ -31,3 +31,8 @@ export type ProfileInfoType = {
 	Gender?: string;
 	Nickname?: string;
 };
+
+export type GroupType = {
+	groupId: string;
+	groupName: string;
+};
