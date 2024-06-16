@@ -42,6 +42,7 @@ function GroupPage() {
 			<div className="flex flex-col items-center w-full">
 				<div className="flex flex-row items-center w-10/12 mt-[10px] space-x-5">
 					<div className="rounded-full bg-gray-200 w-[80px] h-[80px]"></div>
+					{/*↑画像の代わり*/}
 					<div className="text-[30px]">{groupName}</div> {/* idを表示 */}
 				</div>
 				<div className="border border-black w-10/12 h-[170px] mt-[10px]"></div>
