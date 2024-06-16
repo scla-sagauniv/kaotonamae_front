@@ -2,7 +2,10 @@ import { Input } from '@/components/ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Controller, useForm } from 'react-hook-form';
 import { Button } from '@/components/ui/button';
+import { getCurrentUser } from 'aws-amplify/auth';
+import axios from 'axios';
 import { useRouter } from 'next/navigation';
+
 import {
 	Select,
 	SelectContent,
@@ -12,9 +15,19 @@ import {
 } from '@/components/ui/select';
 import { ProfileInfoType } from '@/types/index';
 import { ProfileSchema } from '@/utils/validationSchema';
+import { use, useEffect, useState } from 'react';
 
 const EditMyPage = () => {
 	const router = useRouter();
+
+	useEffect(() => {
+		const fetchUser = async () => {
+			const { userId } = await getCurrentUser();
+			setUserId(userId);
+			console.log(userId);
+		};
+		fetchUser();
+	}, []);
 	const {
 		register,
 		handleSubmit,
@@ -24,9 +37,34 @@ const EditMyPage = () => {
 		resolver: zodResolver(ProfileSchema),
 		mode: 'onChange',
 	});
+	const [userId, setUserId] = useState<string>('');
 
-	const onSubmit = (data: ProfileInfoType) => {
-		console.log(data);
+	const onSubmit = async (data: ProfileInfoType) => {
+		const res = await axios.put(
+			`${process.env.NEXT_PUBLIC_VITE_GO_APP_API_URL}/userInfo`,
+			{
+				userId: userId,
+				userLastName: data.lastName,
+				userFirstName: data.firstName,
+				lastNameFurigana: data.lastname_kana,
+				firstNameFurigana: data.firstname_kana,
+				nickname: data.Nickname,
+				gender: data.Gender,
+				photo: '',
+				birthday: data.Birthday,
+				age: data.Age,
+				hobbys: data.hobby,
+				organization: data.organization,
+				favoriteColor: data.FavoriteColor,
+				favoriteAnimal: data.FavoriteAnimal,
+				favoritePlace: data.FavoritePlace,
+				holidayActivity: data.holidayactivity,
+				weaknesses: data.weaknesses,
+				language: data.Language,
+			},
+		);
+		router.push('/');
+		console.log(res.data);
 	};
 
 	return (
