@@ -92,12 +92,22 @@ export default function Home() {
 					)}
 				</div>
 			</div>
-			<Button
-				onClick={handleAddNewGroup} // Call handleAddNewGroup on button click
-				className="w-40 bg-blue-500 text-white py-2 rounded-md hover:bg-blue-700"
-			>
-				グループ新規追加
-			</Button>
+			<div className="flex flex-col justify-center items-center space-y-3">
+				<Button
+					onClick={handleAddNewGroup}
+					className="w-40 bg-blue-500 text-white w-[200px] rounded-md hover:bg-blue-700"
+				>
+					グループ新規追加
+				</Button>
+				<Button
+					onClick={() => {
+						router.push('/Friends');
+					}}
+					className="w-[200px]"
+				>
+					友達一覧
+				</Button>
+			</div>
 		</div>
 	);
 }
