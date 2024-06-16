@@ -1,7 +1,6 @@
 'use client';
+
 import { Button } from '@/components/ui/button';
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
 import {
 	Card,
 	CardContent,
@@ -10,17 +9,13 @@ import {
 	CardHeader,
 	CardTitle,
 } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-function QuizCorrect() {
-	const router = useRouter();
-	// ページ遷移先の設定まだです
-	const end = () => {
-		router.push('/');
-	};
-	const next = () => {
-		router.push('/');
-	};
+
+interface QuizCorrectProps {
+	onNext: () => void;
+	onEnd: () => void;
+}
+
+function QuizCorrect({ onNext, onEnd }: QuizCorrectProps) {
 	return (
 		<div className="flex min-h-screen justify-center items-center px-10">
 			<Card className="items-center">
@@ -35,22 +30,23 @@ function QuizCorrect() {
 				</CardContent>
 				<CardFooter className="flex justify-center w-full">
 					<div className="flex space-x-4">
-						<button
-							onClick={end}
-							className="inline-flex h-12 items-center justify-center rounded-md bg-green-600 px-6 font-medium text-neutral-50 transition active:scale-110 "
+						<Button
+							onClick={onEnd}
+							className="inline-flex h-12 items-center justify-center rounded-md bg-green-600 px-6 font-medium text-neutral-50 transition active:scale-110"
 						>
 							終了
-						</button>
-						<button
-							onClick={next}
+						</Button>
+						<Button
+							onClick={onNext}
 							className="inline-flex h-12 items-center justify-center rounded-md bg-blue-600 px-6 font-medium text-neutral-50 transition active:scale-110"
 						>
 							次へ
-						</button>
+						</Button>
 					</div>
 				</CardFooter>
 			</Card>
 		</div>
 	);
 }
+
 export default QuizCorrect;

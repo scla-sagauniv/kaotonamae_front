@@ -1,7 +1,6 @@
 'use client';
+
 import { Button } from '@/components/ui/button';
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import {
 	Card,
 	CardContent,
@@ -10,15 +9,14 @@ import {
 	CardHeader,
 	CardTitle,
 } from '@/components/ui/card';
-function QuizFalse() {
-	const router = useRouter();
-	// ページ遷移先の設定まだです
-	const end = () => {
-		router.push('/');
-	};
-	const next = () => {
-		router.push('/');
-	};
+
+interface QuizFalseProps {
+	correctAnswer: string;
+	onNext: () => void;
+	onEnd: () => void;
+}
+
+function QuizFalse({ correctAnswer, onNext, onEnd }: QuizFalseProps) {
 	return (
 		<div className="flex min-h-screen justify-center items-center px-10">
 			<Card className="items-center">
@@ -29,26 +27,27 @@ function QuizFalse() {
 					</CardDescription>
 				</CardHeader>
 				<CardContent className="flex justify-center w-full">
-					<p className="text-center">Aさんです</p>
+					<p className="text-center">{correctAnswer} です</p>
 				</CardContent>
 				<CardFooter className="flex justify-center w-full">
 					<div className="flex space-x-4">
-						<button
-							onClick={end}
-							className="inline-flex h-12 items-center justify-center rounded-md bg-green-600 px-6 font-medium text-neutral-50 transition active:scale-110 "
+						<Button
+							onClick={onEnd}
+							className="inline-flex h-12 items-center justify-center rounded-md bg-green-600 px-6 font-medium text-neutral-50 transition active:scale-110"
 						>
 							終了
-						</button>
-						<button
-							onClick={next}
+						</Button>
+						<Button
+							onClick={onNext}
 							className="inline-flex h-12 items-center justify-center rounded-md bg-blue-600 px-6 font-medium text-neutral-50 transition active:scale-110"
 						>
 							次へ
-						</button>
+						</Button>
 					</div>
 				</CardFooter>
 			</Card>
 		</div>
 	);
 }
+
 export default QuizFalse;

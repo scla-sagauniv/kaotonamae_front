@@ -50,3 +50,17 @@ export type FriendType = {
 	friendName: string;
 	photo: string;
 };
+
+export type QuizHint = {
+	Hint1: string;
+	Hint2: string;
+	Hint3: string;
+};
+
+export type QuizType = {
+	quizQuestionTop: string;
+	quizQuestionBottom: string;
+	quizAnswer: string;
+	quizHint: QuizHint;
+	userPhoto: string;
+};
