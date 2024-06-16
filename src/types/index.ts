@@ -35,4 +35,18 @@ export type ProfileInfoType = {
 export type GroupType = {
 	groupId: string;
 	groupName: string;
+	overview: string;
+};
+
+export type GroupMemberType = {
+	groupId: string;
+	userId: string;
+	memberName: string;
+	photo: string;
+};
+
+export type FriendType = {
+	friendId: string;
+	friendName: string;
+	photo: string;
 };
