@@ -2,6 +2,9 @@
 
 import { Button } from '@/components/ui/button';
 import { useForm } from 'react-hook-form';
+import axios from 'axios';
+import { getCurrentUser } from 'aws-amplify/auth';
+import Header from '@/components/Header';
 
 function CreateUserIcon() {
 	const { register, handleSubmit } = useForm();
@@ -32,11 +35,23 @@ function CreateUserIcon() {
 		}
 
 		const jsonResponse = await response.json();
-		console.log('Upload successful:', jsonResponse.imageUrl);
+		console.log('成功');
+		console.log(imageFileName);
+		console.log(jsonResponse.imageUrl);
+		const { userId } = await getCurrentUser();
+		const res = await axios.post(
+			`${process.env.NEXT_PUBLIC_VITE_GO_APP_API_URL}/userInfo`,
+			{
+				userId: userId,
+				photo: jsonResponse.imageUrl,
+			},
+		);
+		console.log(res);
 	};
 
 	return (
 		<div className="h-screen w-screen">
+			<Header />
 			<div className="flex flex-col items-center justify-center w-full">
 				<div className="rounded-full bg-gray-200 w-[230px] h-[230px] mt-[230px]"></div>
 				<form onSubmit={handleSubmit(onSubmit)}>
