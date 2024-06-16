@@ -15,7 +15,7 @@ import {
 } from '@/components/ui/select';
 import { ProfileInfoType } from '@/types/index';
 import { ProfileSchema } from '@/utils/validationSchema';
-import { use, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const EditMyPage = () => {
 	const router = useRouter();
@@ -71,6 +71,17 @@ const EditMyPage = () => {
 		<div>
 			<div className="max-h-screen w-full p-4">
 				<form onSubmit={handleSubmit(onSubmit)}>
+					<div className="flex flex-col items-center">
+						<img src="" alt="何もありません" />
+						<Button
+							onClick={() => {
+								router.push('/CreateUserIcon');
+							}}
+							className="mt-4 w-1/2 bg-green-500 hover:bg-green-200"
+						>
+							アイコン作成
+						</Button>
+					</div>
 					<div>
 						<label className="block text-gray-700 flont-bold mb-2">姓</label>
 						<Input
