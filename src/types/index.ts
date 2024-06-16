@@ -40,8 +40,8 @@ export type GroupType = {
 
 export type GroupMemberType = {
 	groupId: string;
-	groupName: string;
-	overview: string;
+	userId: string;
+	memberName: string;
 	photo: string;
 };
 
