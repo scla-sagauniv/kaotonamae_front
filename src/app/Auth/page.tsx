@@ -48,7 +48,12 @@ function Auth() {
 			setConfirmEmail('');
 			const { userId } = await getCurrentUser();
 			const res = await axios.post(
-				`${process.env.NEXT_PUBLIC_VITE_GO_APP_API_URL}/createUser/${userId}`,
+				`${process.env.NEXT_PUBLIC_VITE_GO_APP_API_URL}/v1/auth/`,
+				{
+					user_id: userId,
+					email: confirmEmail,
+					password: confirmPassword,
+				},
 			);
 			console.log(res);
 			console.log(userId);

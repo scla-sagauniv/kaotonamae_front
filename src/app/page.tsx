@@ -6,8 +6,8 @@ import axios from 'axios';
 import { useOneTimePassStore } from '@/store/oneTimePassStore';
 import Header from '@/components/Header';
 import { GroupType } from '@/types/index';
-import Link from 'next/link'; // next/linkをインポート
-import { useRouter, useParams } from 'next/navigation';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 
 export default function Home() {
@@ -15,6 +15,7 @@ export default function Home() {
 	const { isOneTimePass, setOneTimePassFalse } = useOneTimePassStore();
 	const [objects, setObjects] = useState<GroupType[]>([]);
 	const [error, setError] = useState<string | null>(null);
+	const [groupNum, setGroupNum] = useState<number>(0);
 
 	useEffect(() => {
 		const fetchUserAndGroups = async () => {
@@ -33,6 +34,7 @@ export default function Home() {
 
 				if (res.data && res.data.length > 0) {
 					setObjects(res.data);
+					setGroupNum(res.data.length);
 				} else {
 					setObjects([]);
 					setError('グループが見つかりませんでした。');
@@ -44,23 +46,18 @@ export default function Home() {
 		};
 
 		fetchUserAndGroups();
-	}, []);
+	}, [groupNum]);
 
 	const handleAddNewGroup = async () => {
 		try {
 			const { userId } = await getCurrentUser();
-			// Make API call to add new group
 			const res = await axios.post<GroupType[]>(
 				`${process.env.NEXT_PUBLIC_VITE_GO_APP_API_URL}/newGroup/${userId}`,
 			);
-
-			// Optionally, handle response if needed
-
-			// Reload the page
-			router.refresh();
+			console.log(res);
+			setGroupNum(groupNum + 1);
 		} catch (error) {
 			console.error('Error adding new group:', error);
-			// Handle error as needed
 		}
 	};
 
@@ -68,6 +65,7 @@ export default function Home() {
 		<div className="h-screen w-screen">
 			<Header />
 			<div className="flex flex-col items-center w-full">
+				<h1 className="text-2xl mt-5">グループ数:{groupNum}</h1>
 				<div className="flex flex-col mt-[45px] overflow-y-auto max-h-[400px] w-10/12">
 					{error ? (
 						<div className="flex justify-center items-center h-[50px] w-full p-3">
