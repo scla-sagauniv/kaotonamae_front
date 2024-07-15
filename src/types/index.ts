@@ -22,14 +22,13 @@ export type ProfileInfoType = {
 	organization?: string;
 	holidayactivity?: string;
 	weaknesses?: string;
-	FavoriteColor?: string;
-	FavoriteAnimal?: string;
-	FavoritePlace?: string;
-	Language?: string;
-	Age?: string;
-	Birthday?: string;
-	Gender?: string;
-	Nickname?: string;
+	favoriteColor?: string;
+	favoriteAnimal?: string;
+	favoritePlace?: string;
+	language?: string;
+	birthday?: string;
+	gender?: string;
+	nickname?: string;
 };
 
 export type GroupType = {

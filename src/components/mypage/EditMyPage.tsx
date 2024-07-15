@@ -40,31 +40,31 @@ const EditMyPage = () => {
 	const [userId, setUserId] = useState<string>('');
 
 	const onSubmit = async (data: ProfileInfoType) => {
-		const res = await axios.put(
-			`${process.env.NEXT_PUBLIC_VITE_GO_APP_API_URL}/userInfo`,
+		console.log(data);
+		console.log('どうかな？');
+		const res = await axios.post(
+			`${process.env.NEXT_PUBLIC_VITE_GO_APP_API_URL}/v1/userInfo/`,
 			{
-				userId: userId,
-				userLastName: data.lastName,
-				userFirstName: data.firstName,
-				lastNameFurigana: data.lastname_kana,
-				firstNameFurigana: data.firstname_kana,
-				nickname: data.Nickname,
-				gender: data.Gender,
-				photo: '',
-				birthday: data.Birthday,
-				age: data.Age,
-				hobbys: data.hobby,
+				user_id: userId,
+				user_last_name: data.lastName,
+				user_first_name: data.firstName,
+				user_last_name_kana: data.lastname_kana,
+				user_first_name_kana: data.firstname_kana,
+				gender: data.gender,
+				icon: 'https://kaotonamae.s3.ap-northeast-1.amazonaws.com/IMG_13A33FF52207-1.jpeg',
+				birth_date: data.birthday,
+				hobby: data.hobby,
 				organization: data.organization,
-				favoriteColor: data.FavoriteColor,
-				favoriteAnimal: data.FavoriteAnimal,
-				favoritePlace: data.FavoritePlace,
-				holidayActivity: data.holidayactivity,
-				weaknesses: data.weaknesses,
-				language: data.Language,
+				holiday_activity: data.holidayactivity,
+				weakness: data.weaknesses,
+				favorite_color: data.favoriteColor,
+				favorite_animal: data.favoriteAnimal,
+				favorite_place: data.favoritePlace,
+				language: data.language,
+				nickname: data.nickname,
 			},
 		);
-		router.push('/');
-		console.log(res.data);
+		// router.push('/');
 	};
 
 	return (
@@ -83,7 +83,7 @@ const EditMyPage = () => {
 						</Button>
 					</div>
 					<div>
-						<label className="block text-gray-700 flont-bold mb-2">姓</label>
+						<label className="block text-gray-700 font-bold mb-2">姓</label>
 						<Input
 							{...register('lastName')}
 							placeholder="姓"
@@ -97,7 +97,7 @@ const EditMyPage = () => {
 					</div>
 
 					<div>
-						<label className="block text-gray-700 flont-bold mb-2">名</label>
+						<label className="block text-gray-700 font-bold mb-2">名</label>
 						<Input
 							{...register('firstName')}
 							placeholder="名"
@@ -111,7 +111,7 @@ const EditMyPage = () => {
 					</div>
 
 					<div>
-						<label className="block text-gray-700 flont-bold mb-2">セイ</label>
+						<label className="block text-gray-700 font-bold mb-2">セイ</label>
 						<Input
 							{...register('lastname_kana')}
 							placeholder="セイ"
@@ -125,7 +125,7 @@ const EditMyPage = () => {
 					</div>
 
 					<div>
-						<label className="block text-gray-700 flont-bold mb-2">メイ</label>
+						<label className="block text-gray-700 font-bold mb-2">メイ</label>
 						<Input
 							{...register('firstname_kana')}
 							placeholder="メイ"
@@ -139,9 +139,9 @@ const EditMyPage = () => {
 					</div>
 
 					<div>
-						<label className="block text-gray-700 flont-bold mb-2">性別</label>
+						<label className="block text-gray-700 font-bold mb-2">性別</label>
 						<Controller
-							name="Gender"
+							name="gender"
 							control={control}
 							render={({ field }) => (
 								<Select onValueChange={field.onChange} value={field.value}>
@@ -158,20 +158,18 @@ const EditMyPage = () => {
 						/>
 					</div>
 					<div>
-						<label className="block text-gray-700 flont-bold mb-2">
-							誕生日
-						</label>
+						<label className="block text-gray-700 font-bold mb-2">誕生日</label>
 						<Input
+							{...register('birthday')}
 							type="date"
 							min="2024-01-01"
 							max="2024-12-31"
-							{...register('Birthday')}
 							placeholder="誕生日"
 							className="w-full p-2 border-gray-300 rounded-md"
 						/>
 					</div>
 					<div>
-						<label className="block text-gray-700 flont-bold mb-2">趣味</label>
+						<label className="block text-gray-700 font-bold mb-2">趣味</label>
 						<Input
 							{...register('hobby')}
 							placeholder="趣味"
@@ -185,7 +183,7 @@ const EditMyPage = () => {
 					</div>
 
 					<div>
-						<label className="block text-gray-700 flont-bold mb-2">
+						<label className="block text-gray-700 font-bold mb-2">
 							所属組織
 						</label>
 						<Input
@@ -196,7 +194,7 @@ const EditMyPage = () => {
 					</div>
 
 					<div>
-						<label className="block text-gray-700 flont-bold mb-2">
+						<label className="block text-gray-700 font-bold mb-2">
 							休日やってること
 						</label>
 						<Input
@@ -207,7 +205,7 @@ const EditMyPage = () => {
 					</div>
 
 					<div>
-						<label className="block text-gray-700 flont-bold mb-2">
+						<label className="block text-gray-700 font-bold mb-2">
 							苦手なこと
 						</label>
 						<Input
@@ -217,49 +215,47 @@ const EditMyPage = () => {
 						/>
 					</div>
 					<div>
-						<label className="block text-gray-700 flont-bold mb-2">
+						<label className="block text-gray-700 font-bold mb-2">
 							好きな色
 						</label>
 						<Input
-							{...register('FavoriteColor')}
+							{...register('favoriteColor')}
 							placeholder="好きな色"
 							className="w-full p-2 border-gray-300 rounded-md"
 						/>
 					</div>
 					<div>
-						<label className="block text-gray-700 flont-bold mb-2">
+						<label className="block text-gray-700 font-bold mb-2">
 							好きな動物
 						</label>
 						<Input
-							{...register('FavoriteAnimal')}
+							{...register('favoriteAnimal')}
 							placeholder="好きな動物"
 							className="w-full p-2 border-gray-300 rounded-md"
 						/>
 					</div>
 					<div>
-						<label className="block text-gray-700 flont-bold mb-2">
+						<label className="block text-gray-700 font-bold mb-2">
 							好きな場所
 						</label>
 						<Input
-							{...register('FavoritePlace')}
+							{...register('favoritePlace')}
 							placeholder="好きな場所"
 							className="w-full p-2 border-gray-300 rounded-md"
 						/>
 					</div>
 					<div>
-						<label className="block text-gray-700 flont-bold mb-2">言語</label>
+						<label className="block text-gray-700 font-bold mb-2">言語</label>
 						<Input
-							{...register('Language')}
+							{...register('language')}
 							placeholder="言語"
 							className="w-full p-2 border-gray-300 rounded-md"
 						/>
 					</div>
 					<div>
-						<label className="block text-gray-700 flont-bold mb-2">
-							あだ名
-						</label>
+						<label className="block text-gray-700 font-bold mb-2">あだ名</label>
 						<Input
-							{...register('Nickname')}
+							{...register('nickname')}
 							placeholder="あだ名"
 							className="w-full p-2 border-gray-300 rounded-md"
 						/>
