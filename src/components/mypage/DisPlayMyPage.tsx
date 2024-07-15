@@ -5,41 +5,49 @@ import axios from 'axios';
 import { ProfileInfoType } from '@/types/index';
 
 function DisPlayMyPage() {
+	const [profileInfo, setProfileInfo] = useState<ProfileInfoType | null>(null);
+	const [Loading, setLoading] = useState<boolean>(true);
+
 	useEffect(() => {
-		console.log('useEffect');
 		try {
 			const fetchProfileInfo = async () => {
 				const { userId } = await getCurrentUser();
 				const res = await axios.get(
-					`${process.env.NEXT_PUBLIC_VITE_GO_APP_API_URL}/userInfo/${userId}`,
+					`${process.env.NEXT_PUBLIC_VITE_GO_APP_API_URL}/v1/userInfo/${userId}`,
 				);
+				console.log(res);
 				console.log(res.data);
 				setProfileInfo({
-					...res.data,
-					firstName: res.data.userFirstName,
-					lastName: res.data.userLastName,
-					firstNameKana: res.data.firstNameFurigana,
-					lastNameKana: res.data.lastNameFurigana,
-					birthday: res.data.birthday,
-					hobby: res.data.hobbys,
-					gender: res.data.gender,
-					organization: res.data.organization,
-					holidayActivity: res.data.holidayActivity,
-					weaknesses: res.data.weaknesses,
-					favoriteColor: res.data.favoriteColor,
-					favoriteAnimal: res.data.favoriteAnimal,
-					favoritePlace: res.data.favoritePlace,
-					language: res.data.language,
-					nickname: res.data.nickname,
+					firstName: res.data.userInfo.user_first_name,
+					lastName: res.data.userInfo.user_last_name,
+					firstname_kana: res.data.userInfo.user_first_name_kana,
+					lastname_kana: res.data.userInfo.user_last_name_kana,
+					birthday: res.data.userInfo.birth_date,
+					hobby: res.data.userInfo.hobby,
+					gender: res.data.userInfo.gender,
+					organization: res.data.userInfo.organization,
+					holidayactivity: res.data.userInfo.holiday_activity,
+					weaknesses: res.data.userInfo.weakness,
+					favoriteColor: res.data.userInfo.favorite_color,
+					favoriteAnimal: res.data.userInfo.favorite_animal,
+					favoritePlace: res.data.userInfo.favorite_place,
+					language: res.data.userInfo.language,
+					nickname: res.data.userInfo.nickname,
 				});
+				setLoading(false);
 			};
 			fetchProfileInfo();
 		} catch (error) {
 			console.error('Error during fetch profile info:', error);
+			setLoading(false);
 		}
+		console.log('profileInfo:', profileInfo);
 	}, []);
 
-	const [profileInfo, setProfileInfo] = useState<ProfileInfoType | null>(null);
+	if (Loading) {
+		return <div>Loading...</div>;
+	}
+
 	return (
 		<div>
 			<div className="max-h-screen w-full p-4">
@@ -50,77 +58,77 @@ function DisPlayMyPage() {
 
 				<div>
 					<label className="block text-gray-700 flont-bold mb-2">名</label>
-					<div>{profileInfo?.firstName}</div>
+					<div className="h-[30px]">{profileInfo?.firstName}</div>
 				</div>
 
 				<div>
 					<label className="block text-gray-700 flont-bold mb-2">セイ</label>
-					<div>{profileInfo?.lastname_kana}</div>
+					<div className="h-[30px]">{profileInfo?.lastname_kana}</div>
 				</div>
 
 				<div>
 					<label className="block text-gray-700 flont-bold mb-2">メイ</label>
-					<div>{profileInfo?.firstname_kana}</div>
+					<div className="h-[30px]">{profileInfo?.firstname_kana}</div>
 				</div>
 
 				<div>
 					<label className="block text-gray-700 flont-bold mb-2">性別</label>
-					<div>{profileInfo?.Gender}</div>
+					<div className="h-[30px]">{profileInfo?.gender}</div>
 				</div>
 				<div>
 					<label className="block text-gray-700 flont-bold mb-2">誕生日</label>
-					<div>{profileInfo?.Birthday}</div>
+					<div className="h-[30px]">{profileInfo?.birthday}</div>
 				</div>
 				<div>
 					<label className="block text-gray-700 flont-bold mb-2">趣味</label>
-					<div>{profileInfo?.hobby}</div>
+					<div className="h-[30px]">{profileInfo?.hobby}</div>
 				</div>
 
 				<div>
 					<label className="block text-gray-700 flont-bold mb-2">
 						所属組織
 					</label>
-					<div>{profileInfo?.organization}</div>
+					<div className="h-[30px]">{profileInfo?.organization}</div>
 				</div>
 
 				<div>
 					<label className="block text-gray-700 flont-bold mb-2">
 						休日やってること
 					</label>
-					<div>{profileInfo?.holidayactivity}</div>
+					<div className="h-[30px]">{profileInfo?.holidayactivity}</div>
 				</div>
 
 				<div>
 					<label className="block text-gray-700 flont-bold mb-2">
 						苦手なこと
 					</label>
-					<div>{profileInfo?.weaknesses}</div>
+					<div className="h-[30px]">{profileInfo?.weaknesses}</div>
 				</div>
 				<div>
 					<label className="block text-gray-700 flont-bold mb-2">
 						好きな色
 					</label>
-					<div>{profileInfo?.FavoriteColor}</div>
+					<div className="h-[30px]">{profileInfo?.favoriteColor}</div>
 				</div>
 				<div>
 					<label className="block text-gray-700 flont-bold mb-2">
 						好きな動物
 					</label>
-					<div>{profileInfo?.FavoriteAnimal}</div>
+					<div className="h-[30px]">{profileInfo?.favoriteAnimal}</div>
 				</div>
 				<div>
 					<label className="block text-gray-700 flont-bold mb-2">
 						好きな場所
 					</label>
-					<div>{profileInfo?.FavoritePlace}</div>
+					<div className="h-[30px]">{profileInfo?.favoritePlace}</div>
 				</div>
 				<div>
 					<label className="block text-gray-700 flont-bold mb-2">言語</label>
-					<div>{profileInfo?.Language}</div>
+					<div className="h-[30px]">{profileInfo?.language}</div>
 				</div>
 				<div>
 					<label className="block text-gray-700 flont-bold mb-2">あだ名</label>
-					<div>{profileInfo?.Nickname}</div>
+					<div className="h-[30px]">{profileInfo?.nickname}</div>
 				</div>
 				<Button className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-700">
 					ホーム

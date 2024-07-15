@@ -64,7 +64,8 @@ const EditMyPage = () => {
 				nickname: data.nickname,
 			},
 		);
-		// router.push('/');
+		console.log('Create Profile : ', res);
+		router.push('/');
 	};
 
 	return (
@@ -149,9 +150,8 @@ const EditMyPage = () => {
 										<SelectValue placeholder="性別" />
 									</SelectTrigger>
 									<SelectContent>
-										<SelectItem value="men">男</SelectItem>
-										<SelectItem value="women">女</SelectItem>
-										<SelectItem value="the_other">その他</SelectItem>
+										<SelectItem value="男性">男性</SelectItem>
+										<SelectItem value="女性">女性</SelectItem>
 									</SelectContent>
 								</Select>
 							)}
