@@ -66,7 +66,7 @@ export default function Home() {
 			<Header />
 			<div className="flex flex-col items-center w-full">
 				<h1 className="text-2xl mt-5">グループ数:{groupNum}</h1>
-				<div className="flex flex-col mt-[45px] overflow-y-auto max-h-[400px] w-10/12">
+				{/* <div className="flex flex-col mt-[45px] overflow-y-auto max-h-[400px] w-10/12">
 					{error ? (
 						<div className="flex justify-center items-center h-[50px] w-full p-3">
 							<p>{error}</p>
@@ -88,7 +88,7 @@ export default function Home() {
 							<p>データがありません。</p>
 						</div>
 					)}
-				</div>
+				</div> */}
 			</div>
 			<div className="flex flex-col justify-center items-center space-y-3">
 				<Button

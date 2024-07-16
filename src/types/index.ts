@@ -32,7 +32,6 @@ export type ProfileInfoType = {
 };
 
 export type GroupType = {
-	groupId: string;
 	groupName: string;
 	description: string;
 };

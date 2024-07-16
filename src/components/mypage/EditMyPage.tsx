@@ -28,6 +28,7 @@ const EditMyPage = () => {
 		};
 		fetchUser();
 	}, []);
+
 	const {
 		register,
 		handleSubmit,
@@ -37,11 +38,10 @@ const EditMyPage = () => {
 		resolver: zodResolver(ProfileSchema),
 		mode: 'onChange',
 	});
+
 	const [userId, setUserId] = useState<string>('');
 
 	const onSubmit = async (data: ProfileInfoType) => {
-		console.log(data);
-		console.log('どうかな？');
 		const res = await axios.post(
 			`${process.env.NEXT_PUBLIC_VITE_GO_APP_API_URL}/v1/userInfo/`,
 			{

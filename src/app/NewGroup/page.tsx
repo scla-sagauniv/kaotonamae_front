@@ -8,10 +8,21 @@ import { useForm } from 'react-hook-form';
 import { GroupSchema } from '@/utils/validationSchema';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { GroupType, GroupMemberType } from '@/types/index';
+import { GroupType } from '@/types/index';
+import { getCurrentUser } from 'aws-amplify/auth';
 
 function NewGroup() {
 	const router = useRouter();
+	const [userId, setUserId] = useState<string>('');
+
+	useEffect(() => {
+		const fetchUser = async () => {
+			const { userId } = await getCurrentUser();
+			setUserId(userId);
+			console.log(userId);
+		};
+		fetchUser();
+	}, []);
 
 	const {
 		register,
@@ -23,8 +34,17 @@ function NewGroup() {
 	});
 
 	const onSubmit = async (data: GroupType) => {
-		console.log('クリックされました');
 		console.log(data);
+		const res = await axios.post(
+			`${process.env.NEXT_PUBLIC_VITE_GO_APP_API_URL}/v1/group/`,
+			{
+				user_id: userId,
+				group_name: data.groupName,
+				group_description: data.description,
+			},
+		);
+		console.log('Create Group : ', res);
+		router.push('/');
 	};
 
 	return (
