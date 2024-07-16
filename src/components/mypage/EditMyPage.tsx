@@ -40,6 +40,15 @@ const EditMyPage = () => {
 	});
 
 	const [userId, setUserId] = useState<string>('');
+	const [imageSrc, setImageSrc] = useState<string>('');
+
+	const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		if (e.target.files && e.target.files[0]) {
+			const file = e.target.files[0];
+			const newImageSrc = URL.createObjectURL(file);
+			setImageSrc(newImageSrc);
+		}
+	};
 
 	const onSubmit = async (data: ProfileInfoType) => {
 		const res = await axios.post(
@@ -72,20 +81,17 @@ const EditMyPage = () => {
 		<div>
 			<div className="max-h-screen w-full p-4">
 				<form onSubmit={handleSubmit(onSubmit)}>
-					<div className="flex flex-col items-center">
+					<div className="flex flex-col items-center w-full justify-center">
 						<img
-							src="https://kaotonamae.s3.ap-northeast-1.amazonaws.com/IMG_3672.jpg"
-							alt="何もありません"
-							className="rounded-full w-[300px] h-[300px] object-cover"
+							src={imageSrc}
+							alt=""
+							className="rounded-full w-[300px] h-[300px] object-cover border border-black"
 						/>
-						<Button
-							onClick={() => {
-								router.push('/CreateUserIcon');
-							}}
-							className="mt-4 w-1/2 bg-green-500 hover:bg-green-200"
-						>
-							アイコン作成
-						</Button>
+						<input
+							type="file"
+							accept="image/png, image/jpeg"
+							onChange={handleImageChange}
+						/>
 					</div>
 					<div>
 						<label className="block text-gray-700 font-bold mb-2">姓</label>
