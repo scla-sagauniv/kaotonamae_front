@@ -48,18 +48,18 @@ export default function Home() {
 		fetchUserAndGroups();
 	}, [groupNum]);
 
-	const handleAddNewGroup = async () => {
-		try {
-			const { userId } = await getCurrentUser();
-			const res = await axios.post<GroupType[]>(
-				`${process.env.NEXT_PUBLIC_VITE_GO_APP_API_URL}/newGroup/${userId}`,
-			);
-			console.log(res);
-			setGroupNum(groupNum + 1);
-		} catch (error) {
-			console.error('Error adding new group:', error);
-		}
-	};
+	// const handleAddNewGroup = async () => {
+	// 	try {
+	// 		const { userId } = await getCurrentUser();
+	// 		const res = await axios.post<GroupType[]>(
+	// 			`${process.env.NEXT_PUBLIC_VITE_GO_APP_API_URL}/newGroup/${userId}`,
+	// 		);
+	// 		console.log(res);
+	// 		setGroupNum(groupNum + 1);
+	// 	} catch (error) {
+	// 		console.error('Error adding new group:', error);
+	// 	}
+	// };
 
 	return (
 		<div className="h-screen w-screen">
@@ -92,8 +92,10 @@ export default function Home() {
 			</div>
 			<div className="flex flex-col justify-center items-center space-y-3">
 				<Button
-					onClick={handleAddNewGroup}
-					className="w-40 bg-blue-500 text-white w-[200px] rounded-md hover:bg-blue-700"
+					onClick={() => {
+						router.push('/NewGroup');
+					}}
+					className="w-40 bg-blue-500 text-white rounded-md hover:bg-blue-700"
 				>
 					グループ新規追加
 				</Button>

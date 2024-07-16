@@ -44,3 +44,8 @@ export const ProfileSchema = z.object({
 	gender: z.string().optional(),
 	nickname: z.string().optional(),
 });
+
+export const GroupSchema = z.object({
+	groupName: z.string().min(1, 'グループ名は必須です'),
+	description: z.string().min(1, 'グループの説明は必須です'),
+});
