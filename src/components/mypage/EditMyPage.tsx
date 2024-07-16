@@ -73,7 +73,11 @@ const EditMyPage = () => {
 			<div className="max-h-screen w-full p-4">
 				<form onSubmit={handleSubmit(onSubmit)}>
 					<div className="flex flex-col items-center">
-						<img src="" alt="何もありません" />
+						<img
+							src="https://kaotonamae.s3.ap-northeast-1.amazonaws.com/IMG_3672.jpg"
+							alt="何もありません"
+							className="rounded-full w-[300px] h-[300px] object-cover"
+						/>
 						<Button
 							onClick={() => {
 								router.push('/CreateUserIcon');
