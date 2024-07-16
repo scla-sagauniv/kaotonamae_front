@@ -2,7 +2,7 @@
 
 import Header from '@/components/Header';
 import { Button } from '@/components/ui/button';
-import { useRouter, useParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { GroupSchema } from '@/utils/validationSchema';
@@ -34,13 +34,14 @@ function NewGroup() {
 	});
 
 	const onSubmit = async (data: GroupType) => {
+		console.log('クリック');
 		console.log(data);
 		const res = await axios.post(
 			`${process.env.NEXT_PUBLIC_VITE_GO_APP_API_URL}/v1/group/`,
 			{
 				user_id: userId,
-				group_name: data.groupName,
-				group_description: data.description,
+				group_name: data.group_name,
+				group_description: data.group_description,
 			},
 		);
 		console.log('Create Group : ', res);
@@ -60,12 +61,12 @@ function NewGroup() {
 						<input
 							type="text"
 							id="groupName"
-							{...register('groupName')}
+							{...register('group_name')}
 							className="border border-black w-[250px] h-[40px] mt-[10px]"
 						/>
-						{errors.groupName && (
+						{errors.group_name && (
 							<span className="text-red-500 text-sm">
-								{errors.groupName.message}
+								{errors.group_name.message}
 							</span>
 						)}
 					</div>
@@ -77,12 +78,12 @@ function NewGroup() {
 						</label>
 						<textarea
 							id="description"
-							{...register('description')}
+							{...register('group_description')}
 							className="border border-black w-[380px] h-[170px] mt-[10px]"
 						/>
-						{errors.description && (
+						{errors.group_description && (
 							<span className="text-red-500 text-sm">
-								{errors.description.message}
+								{errors.group_description.message}
 							</span>
 						)}
 					</div>
