@@ -34,8 +34,6 @@ function NewGroup() {
 	});
 
 	const onSubmit = async (data: GroupType) => {
-		console.log('クリック');
-		console.log(data);
 		const res = await axios.post(
 			`${process.env.NEXT_PUBLIC_VITE_GO_APP_API_URL}/v1/group/`,
 			{

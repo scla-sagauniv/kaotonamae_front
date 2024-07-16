@@ -46,6 +46,6 @@ export const ProfileSchema = z.object({
 });
 
 export const GroupSchema = z.object({
-	groupName: z.string().min(1, 'グループ名は必須です'),
-	description: z.string().min(1, 'グループの説明は必須です'),
+	group_name: z.string().min(1, 'グループ名は必須です'),
+	group_description: z.string().min(1, 'グループの説明は必須です'),
 });
