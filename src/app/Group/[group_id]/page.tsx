@@ -9,35 +9,28 @@ import { GroupType, GroupMemberType } from '@/types/index';
 
 function GroupPage() {
 	const router = useRouter();
-	const Params = useParams();
-	const id = Params.id; // ここで動的パラメータを取得
+	const { group_id } = useParams();
 	const [groupMembers, setGroupMembers] = useState<GroupMemberType[]>([]);
-	const [groupName, setGroupName] = useState('');
-	const [overview, setOverview] = useState('');
+	const [group, setGroup] = useState<GroupType>({
+		group_id: group_id.toString(),
+		group_name: '',
+		group_description: '',
+	});
 
 	useEffect(() => {
 		const fetchGroupsAndGroupMembers = async () => {
 			try {
-				const Groups = await axios.get<GroupType>(
-					`${process.env.NEXT_PUBLIC_VITE_GO_APP_API_URL}/group/${id}`,
+				const Group = await axios.get(
+					`${process.env.NEXT_PUBLIC_VITE_GO_APP_API_URL}/v1/group/${group_id}`,
 				);
-				const groupData = Groups.data; // groupData の型は GroupType
-				// データをセットする例（適宜 useState を使用する前提で記述）
-				setGroupName(groupData.groupName);
-				setOverview(groupData.overview);
-				const GroupMembers = await axios.get<GroupMemberType[]>(
-					`${process.env.NEXT_PUBLIC_VITE_GO_APP_API_URL}/groupMembers/${id}`,
-				);
-				const groupMemberData = GroupMembers.data;
-				setGroupMembers(groupMemberData);
-				console.log(groupMembers);
+				setGroup(Group.data.group);
 			} catch (error) {
 				console.error('Error fetching groups:', error);
 			}
 		};
 
 		fetchGroupsAndGroupMembers();
-	}, [id]); // idを依存配列に追加
+	}, []);
 
 	return (
 		<div className="h-screen w-screen">
@@ -45,11 +38,10 @@ function GroupPage() {
 			<div className="flex flex-col items-center w-full">
 				<div className="flex flex-row items-center w-10/12 mt-[10px] space-x-5">
 					<div className="rounded-full bg-gray-200 w-[80px] h-[80px]"></div>
-					{/*↑画像の代わり*/}
-					<div className="text-[30px]">{groupName}</div> {/* idを表示 */}
+					<div className="text-[20px]">{group.group_name}</div>
 				</div>
 				<div className="border border-black w-10/12 h-[170px] mt-[10px]">
-					{overview}
+					{group.group_description}
 				</div>
 				<div className="flex flex-col mt-[25px] overflow-y-auto max-h-[250px] w-10/12">
 					{groupMembers.map((member, index) => (
