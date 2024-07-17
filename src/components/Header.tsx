@@ -38,7 +38,7 @@ function Header() {
 						<span
 							className="text-[8px] mt-1"
 							onClick={() => {
-								router.push('MyPage');
+								router.push('/MyPage');
 							}}
 						>
 							マイページ

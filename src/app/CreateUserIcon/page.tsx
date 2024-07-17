@@ -28,6 +28,7 @@ function CreateUserIcon() {
 				body: formData,
 			},
 		);
+		console.log('S3に送信される画像は', response);
 
 		if (!response.ok) {
 			console.error('Failed to upload image');

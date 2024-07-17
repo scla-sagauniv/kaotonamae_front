@@ -20,11 +20,13 @@ import { useEffect, useState } from 'react';
 const EditMyPage = () => {
 	const router = useRouter();
 
+	const [userId, setUserId] = useState<string>('');
+	const [file, setFile] = useState<File | null>(null);
+
 	useEffect(() => {
 		const fetchUser = async () => {
 			const { userId } = await getCurrentUser();
 			setUserId(userId);
-			console.log(userId);
 		};
 		fetchUser();
 	}, []);
@@ -39,42 +41,77 @@ const EditMyPage = () => {
 		mode: 'onChange',
 	});
 
-	const [userId, setUserId] = useState<string>('');
-	const [imageSrc, setImageSrc] = useState<string>('');
+	const handleImageUpload = async (file: File): Promise<string | null> => {
+		const formData = new FormData();
+		formData.append('file', file);
+		formData.append('filename', file.name);
+
+		try {
+			const res = await fetch(`/api/kaotonamae/upload?filename=${file.name}`, {
+				method: 'POST',
+				body: formData,
+			});
+
+			if (!res.ok) {
+				console.error('画像のアップロードに失敗しました');
+			}
+
+			const jsonRes = await res.json();
+			return jsonRes.imageUrl;
+		} catch (err) {
+			console.error('画像のアップロードに失敗しました', err);
+			return null;
+		}
+	};
 
 	const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		if (e.target.files && e.target.files[0]) {
-			const file = e.target.files[0];
-			const newImageSrc = URL.createObjectURL(file);
-			setImageSrc(newImageSrc);
+			console.log('Change Image', e.target.files[0]);
+			setFile(e.target.files[0]);
 		}
 	};
 
 	const onSubmit = async (data: ProfileInfoType) => {
-		const res = await axios.post(
-			`${process.env.NEXT_PUBLIC_VITE_GO_APP_API_URL}/v1/userInfo/`,
-			{
-				user_id: userId,
-				user_last_name: data.lastName,
-				user_first_name: data.firstName,
-				user_last_name_kana: data.lastname_kana,
-				user_first_name_kana: data.firstname_kana,
-				gender: data.gender,
-				icon: 'https://kaotonamae.s3.ap-northeast-1.amazonaws.com/IMG_13A33FF52207-1.jpeg',
-				birth_date: data.birthday,
-				hobby: data.hobby,
-				organization: data.organization,
-				holiday_activity: data.holidayactivity,
-				weakness: data.weaknesses,
-				favorite_color: data.favoriteColor,
-				favorite_animal: data.favoriteAnimal,
-				favorite_place: data.favoritePlace,
-				language: data.language,
-				nickname: data.nickname,
-			},
-		);
-		console.log('Create Profile : ', res);
-		router.push('/');
+		if (!file) {
+			console.log('画像が選択されていません');
+			return;
+		}
+
+		const uploadImageUrl = await handleImageUpload(file);
+
+		if (!uploadImageUrl) {
+			console.log('画像のアップロードに失敗しました');
+			return;
+		}
+
+		try {
+			const res = await axios.post(
+				`${process.env.NEXT_PUBLIC_VITE_GO_APP_API_URL}/v1/userInfo/`,
+				{
+					user_id: userId,
+					user_last_name: data.lastName,
+					user_first_name: data.firstName,
+					user_last_name_kana: data.lastname_kana,
+					user_first_name_kana: data.firstname_kana,
+					gender: data.gender,
+					icon: uploadImageUrl,
+					birth_date: data.birthday,
+					hobby: data.hobby,
+					organization: data.organization,
+					holiday_activity: data.holidayactivity,
+					weakness: data.weaknesses,
+					favorite_color: data.favoriteColor,
+					favorite_animal: data.favoriteAnimal,
+					favorite_place: data.favoritePlace,
+					language: data.language,
+					nickname: data.nickname,
+				},
+			);
+			console.log('Create Profile : ', res);
+			router.push('/');
+		} catch (err) {
+			console.error('プロフィールの作成に失敗しました', err);
+		}
 	};
 
 	return (
@@ -83,7 +120,7 @@ const EditMyPage = () => {
 				<form onSubmit={handleSubmit(onSubmit)}>
 					<div className="flex flex-col items-center w-full justify-center">
 						<img
-							src={imageSrc}
+							src={''}
 							alt=""
 							className="rounded-full w-[300px] h-[300px] object-cover border border-black"
 						/>

@@ -34,7 +34,6 @@ export async function POST(request: Request) {
 	};
 
 	try {
-		//画像のアップロード
 		const command = new PutObjectCommand(uploadParams);
 		const uploadResult = await s3Client.send(command);
 		console.log('Upload success:', uploadResult);
