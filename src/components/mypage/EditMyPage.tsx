@@ -120,7 +120,11 @@ const EditMyPage = () => {
 				<form onSubmit={handleSubmit(onSubmit)}>
 					<div className="flex flex-col items-center w-full justify-center">
 						<img
-							src={''}
+							src={
+								file
+									? URL.createObjectURL(file)
+									: 'https://icooon-mono.com/i/icon_14440/icon_144400_256.png'
+							}
 							alt=""
 							className="rounded-full w-[300px] h-[300px] object-cover border border-black"
 						/>
