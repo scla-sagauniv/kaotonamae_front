@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { GroupType, GroupMemberType } from '@/types/index';
 
-function GroupPage() {
+function CreateGroup() {
 	const router = useRouter();
 	const { group_id } = useParams();
 	const [groupMembers, setGroupMembers] = useState<GroupMemberType[]>([]);
@@ -18,6 +18,7 @@ function GroupPage() {
 	});
 
 	useEffect(() => {
+		console.log('group_id:', group_id);
 		const fetchGroupsAndGroupMembers = async () => {
 			try {
 				const Group = await axios.get(
@@ -63,14 +64,7 @@ function GroupPage() {
 					クイズ
 				</Button>
 				<div className="flex flex-row justify-evenly w-5/6 mt-[30px]">
-					<Button
-						onClick={() => {
-							router.push(`/CreateGroup/${group_id}`);
-						}}
-						className="w-1/3"
-					>
-						編集
-					</Button>
+					<Button className="w-1/3">編集</Button>
 					<Button
 						onClick={() => {
 							router.push('/');
@@ -85,4 +79,4 @@ function GroupPage() {
 	);
 }
 
-export default GroupPage;
+export default CreateGroup;
