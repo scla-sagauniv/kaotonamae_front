@@ -49,7 +49,7 @@ function NewGroup() {
 	return (
 		<div className="h-screen w-screen">
 			<Header />
-			<form onSubmit={handleSubmit(onSubmit)}>
+			<form onSubmit={handleSubmit(onSubmit)} className="mt-[74px]">
 				<div className="flex flex-row justify-center w-full mt-10 space-x-5">
 					<div className="rounded-full bg-gray-200 w-[100px] h-[100px]"></div>
 					<div className="flex flex-col">

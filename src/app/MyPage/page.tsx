@@ -6,13 +6,13 @@ import EditMyPage from '@/components/mypage/EditMyPage';
 import DisPlayMyPage from '@/components/mypage/DisPlayMyPage';
 import { Button } from '@/components/ui/button';
 
-const MyForm = () => {
+const MyPage = () => {
 	const [isEdit, setIsEdit] = useState<boolean>(false);
 
 	return (
 		<>
 			<Header />
-			<div className="flex flex-col">
+			<div className="flex flex-col mt-[75px]">
 				<Button
 					onClick={() => {
 						setIsEdit(!isEdit);
@@ -27,4 +27,4 @@ const MyForm = () => {
 	);
 };
 
-export default MyForm;
+export default MyPage;

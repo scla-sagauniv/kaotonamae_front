@@ -60,7 +60,7 @@ export default function Home() {
 	return (
 		<div className="h-screen w-screen">
 			<Header />
-			<div className="flex flex-col items-center w-full">
+			<div className="flex flex-col items-center w-full mt-[74px]">
 				<h1 className="text-2xl mt-5">グループ数:{groupNum}</h1>
 				<div className="flex flex-col mt-[45px] overflow-y-auto max-h-[400px] w-10/12">
 					{error ? (
