@@ -65,7 +65,7 @@ function GroupPage() {
 				<div className="flex flex-row justify-evenly w-5/6 mt-[30px]">
 					<Button
 						onClick={() => {
-							router.push(`/CreateGroup/${group_id}`);
+							router.push(`/EditGroup/${group_id}`);
 						}}
 						className="w-1/3"
 					>
