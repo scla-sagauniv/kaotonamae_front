@@ -29,6 +29,7 @@ export type ProfileInfoType = {
 	birthday?: string;
 	gender?: string;
 	nickname?: string;
+	icon: string;
 };
 
 export type GroupType = {

@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { getCurrentUser } from 'aws-amplify/auth';
 import axios from 'axios';
 import { ProfileInfoType } from '@/types/index';
+import Image from 'next/image';
 
 function DisPlayMyPage() {
 	const [profileInfo, setProfileInfo] = useState<ProfileInfoType | null>(null);
@@ -33,6 +34,7 @@ function DisPlayMyPage() {
 					favoritePlace: res.data.userInfo.favorite_place,
 					language: res.data.userInfo.language,
 					nickname: res.data.userInfo.nickname,
+					icon: res.data.userInfo.icon,
 				});
 				setLoading(false);
 			};
@@ -51,6 +53,19 @@ function DisPlayMyPage() {
 	return (
 		<div>
 			<div className="max-h-screen w-full p-4">
+				{profileInfo && (
+					<div className="flex justify-center">
+						<div className="w-[300px] h-[300px] rounded-full overflow-hidden flex justify-center items-center">
+							<Image
+								src={profileInfo.icon}
+								height={400} // 親要素より大きく設定
+								width={400} // 親要素より大きく設定
+								alt="ユーザのアイコン"
+								className="object-cover"
+							/>
+						</div>
+					</div>
+				)}
 				<div>
 					<label className="block text-gray-700 flont-bold mb-2">姓</label>
 					<div className="h-[30px]">{profileInfo?.lastName}</div>
