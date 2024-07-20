@@ -4,8 +4,10 @@ import { getCurrentUser } from 'aws-amplify/auth';
 import axios from 'axios';
 import { ProfileInfoType } from '@/types/index';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 function DisPlayMyPage() {
+	const router = useRouter();
 	const [profileInfo, setProfileInfo] = useState<ProfileInfoType | null>(null);
 	const [Loading, setLoading] = useState<boolean>(true);
 
@@ -145,7 +147,12 @@ function DisPlayMyPage() {
 					<label className="block text-gray-700 flont-bold mb-2">あだ名</label>
 					<div className="h-[30px]">{profileInfo?.nickname}</div>
 				</div>
-				<Button className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-700">
+				<Button
+					onClick={() => {
+						router.push('/');
+					}}
+					className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-700"
+				>
 					ホーム
 				</Button>
 			</div>
