@@ -33,9 +33,9 @@ function GroupPage() {
 	}, []);
 
 	return (
-		<div className="h-screen w-screen">
+		<div className="h-screen w-screen flex flex-col mt-[74px]">
 			<Header />
-			<div className="flex flex-col items-center w-full">
+			<div className="flex flex-col items-center w-ful">
 				<div className="flex flex-row items-center w-10/12 mt-[10px] space-x-5">
 					<div className="rounded-full bg-gray-200 w-[80px] h-[80px]"></div>
 					<div className="text-[20px]">{group.group_name}</div>
