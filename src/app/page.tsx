@@ -16,6 +16,7 @@ export default function Home() {
 	const [objects, setObjects] = useState<GroupType[]>([]);
 	const [error, setError] = useState<string | null>(null);
 	const [groupNum, setGroupNum] = useState<number>(0);
+	const [userId, setUserId] = useState<string | null>(null);
 
 	useEffect(() => {
 		const fetchUserAndGroups = async () => {
@@ -27,6 +28,8 @@ export default function Home() {
 				console.log('user id: ', userId);
 				console.log('username: ', username);
 				console.log('sign-in details: ', signInDetails);
+				setUserId(userId);
+				console.log('userId: ', userId);
 
 				const res = await axios.get(
 					`${process.env.NEXT_PUBLIC_VITE_GO_APP_API_URL}/v1/group/user/${userId}`,
@@ -36,10 +39,6 @@ export default function Home() {
 					const mappedGroups = res.data.groups.map((group: GroupType) => ({
 						group_id: group.group_id,
 						group_name: group.group_name,
-						// group_description: group.group_description,
-						// groupIcon: group.group_icon,
-						// updatedAt: group.updated_at,
-						// createdAt: group.created_at,
 					}));
 					setObjects(mappedGroups);
 					setGroupNum(res.data.groups.length);
@@ -97,7 +96,7 @@ export default function Home() {
 				</Button>
 				<Button
 					onClick={() => {
-						router.push('/Friends');
+						router.push(`/Friends/${userId}`);
 					}}
 					className="w-[200px]"
 				>
