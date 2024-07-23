@@ -24,7 +24,7 @@ const objects = [
 function Friends() {
 	const router = useRouter();
 	const { userId } = useParams();
-	const [objects, setObjects] = useState([]);
+	const [objects, setObjects] = useState<string[]>([]);
 
 	useEffect(() => {
 		const loadFriends = async () => {

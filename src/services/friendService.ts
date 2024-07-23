@@ -6,7 +6,7 @@ export const fetchFriends = async (userId: string) => {
 			`${process.env.NEXT_PUBLIC_VITE_GO_APP_API_URL}/v1/friend/user/${userId}`,
 		);
 		if (res.data.friends && res.data.friends.length > 0) {
-			const mappedFriends = res.data.friends.map((friend: any) => ({
+			const mappedFriends = res.data.friends.map((friend: string) => ({
 				friend_id: friend,
 			}));
 			return mappedFriends;
