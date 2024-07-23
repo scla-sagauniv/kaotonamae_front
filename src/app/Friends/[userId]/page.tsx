@@ -6,20 +6,6 @@ import { faQrcode, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import { useRouter, useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { fetchFriends, fetchUserName } from '@/services/friendService';
-import { string } from 'zod';
-
-const objects = [
-	{ name: 'ユーザー1' },
-	{ name: 'ユーザー2' },
-	{ name: 'ユーザー3' },
-	{ name: 'ユーザー4' },
-	{ name: 'ユーザー5' },
-	{ name: 'ユーザー6' },
-	{ name: 'ユーザー7' },
-	{ name: 'ユーザー8' },
-	{ name: 'ユーザー9' },
-	{ name: 'ユーザー10' },
-];
 
 function Friends() {
 	const router = useRouter();
@@ -34,7 +20,8 @@ function Friends() {
 				fetchUserName(friend.friend_id),
 			);
 			const friendName = await Promise.all(userInfoPromises);
-			console.log('userInfos:', friendName);
+			setObjects(friendName);
+			console.log(friendName);
 		};
 		loadFriends();
 	}, []);
@@ -44,15 +31,15 @@ function Friends() {
 			<Header />
 			<div className="flex flex-col items-center w-full mt-[74px]">
 				<div className="flex flex-col mt-[45px] overflow-y-auto max-h-[400px] w-10/12">
-					{/* {objects.map((object, index) => (
+					{objects.map((object, index) => (
 						<div
 							key={index}
 							className="flex flex-raw items-center border border-black h-[50px] space-x-2 w-full p-3"
 						>
 							<div className="rounded-full bg-gray-200 w-10 h-10 ml-2"></div>
-							<p>{object.name}</p>
+							<p>{object}</p>
 						</div>
-					))} */}
+					))}
 				</div>
 				<div className="flex flex-raw w-full justify-evenly absolute bottom-20">
 					<div
