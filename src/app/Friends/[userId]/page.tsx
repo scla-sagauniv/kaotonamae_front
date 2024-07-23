@@ -3,8 +3,10 @@
 import Header from '@/components/Header';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faQrcode, faUserPlus } from '@fortawesome/free-solid-svg-icons';
-import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+import { useRouter, useParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import { fetchFriends } from '@/services/friendService';
 
 const objects = [
 	{ name: 'ユーザー1' },
@@ -21,9 +23,16 @@ const objects = [
 
 function Friends() {
 	const router = useRouter();
+	const { userId } = useParams();
+	const [objects, setObjects] = useState([]);
 
 	useEffect(() => {
-		console.log('Friends page');
+		const loadFriends = async () => {
+			const id = Array.isArray(userId) ? userId[0] : userId;
+			const friends = await fetchFriends(id);
+			setObjects(friends);
+		};
+		loadFriends();
 	}, []);
 
 	return (
@@ -31,7 +40,7 @@ function Friends() {
 			<Header />
 			<div className="flex flex-col items-center w-full mt-[74px]">
 				<div className="flex flex-col mt-[45px] overflow-y-auto max-h-[400px] w-10/12">
-					{objects.map((object, index) => (
+					{/* {objects.map((object, index) => (
 						<div
 							key={index}
 							className="flex flex-raw items-center border border-black h-[50px] space-x-2 w-full p-3"
@@ -39,7 +48,7 @@ function Friends() {
 							<div className="rounded-full bg-gray-200 w-10 h-10 ml-2"></div>
 							<p>{object.name}</p>
 						</div>
-					))}
+					))} */}
 				</div>
 				<div className="flex flex-raw w-full justify-evenly absolute bottom-20">
 					<div
