@@ -17,3 +17,19 @@ export const fetchFriends = async (userId: string) => {
 		return [];
 	}
 };
+
+export const fetchUserName = async (userId: string) => {
+	try {
+		const res = await axios.get(
+			`${process.env.NEXT_PUBLIC_VITE_GO_APP_API_URL}/v1/userInfo/${userId}`,
+		);
+		const userName =
+			res.data.userInfo.user_last_name +
+			' ' +
+			res.data.userInfo.user_first_name;
+		return userName;
+	} catch (error) {
+		console.error('Error fetching user name:', error);
+		return null;
+	}
+};

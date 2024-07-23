@@ -5,8 +5,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faQrcode, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import { useRouter, useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import axios from 'axios';
-import { fetchFriends } from '@/services/friendService';
+import { fetchFriends, fetchUserName } from '@/services/friendService';
+import { string } from 'zod';
 
 const objects = [
 	{ name: 'ユーザー1' },
@@ -30,7 +30,11 @@ function Friends() {
 		const loadFriends = async () => {
 			const id = Array.isArray(userId) ? userId[0] : userId;
 			const friends = await fetchFriends(id);
-			setObjects(friends);
+			const userInfoPromises = friends.map((friend: { friend_id: string }) =>
+				fetchUserName(friend.friend_id),
+			);
+			const friendName = await Promise.all(userInfoPromises);
+			console.log('userInfos:', friendName);
 		};
 		loadFriends();
 	}, []);
