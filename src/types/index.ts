@@ -64,3 +64,8 @@ export type QuizType = {
 	quizHint: QuizHint;
 	userPhoto: string;
 };
+
+export type FriendNameType = {
+	userId: string;
+	userName: string;
+};

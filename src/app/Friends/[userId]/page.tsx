@@ -6,11 +6,13 @@ import { faQrcode, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import { useRouter, useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { fetchFriends, fetchUserName } from '@/services/friendService';
+import { FriendNameType } from '@/types';
+import Link from 'next/link';
 
 function Friends() {
 	const router = useRouter();
 	const { userId } = useParams();
-	const [objects, setObjects] = useState<string[]>([]);
+	const [objects, setObjects] = useState<FriendNameType[]>([]);
 
 	useEffect(() => {
 		const loadFriends = async () => {
@@ -21,7 +23,6 @@ function Friends() {
 			);
 			const friendName = await Promise.all(userInfoPromises);
 			setObjects(friendName);
-			console.log(friendName);
 		};
 		loadFriends();
 	}, []);
@@ -32,13 +33,14 @@ function Friends() {
 			<div className="flex flex-col items-center w-full mt-[74px]">
 				<div className="flex flex-col mt-[45px] overflow-y-auto max-h-[400px] w-10/12">
 					{objects.map((object, index) => (
-						<div
+						<Link
+							href={`/FriendPage/${object.userId}`}
 							key={index}
 							className="flex flex-raw items-center border border-black h-[50px] space-x-2 w-full p-3"
 						>
 							<div className="rounded-full bg-gray-200 w-10 h-10 ml-2"></div>
-							<p>{object}</p>
-						</div>
+							<p>{object.userName}</p>
+						</Link>
 					))}
 				</div>
 				<div className="flex flex-raw w-full justify-evenly absolute bottom-20">

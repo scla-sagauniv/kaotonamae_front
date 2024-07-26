@@ -27,7 +27,11 @@ export const fetchUserName = async (userId: string) => {
 			res.data.userInfo.user_last_name +
 			' ' +
 			res.data.userInfo.user_first_name;
-		return userName;
+		const userIdAndName = {
+			userId: userId,
+			userName: userName,
+		};
+		return userIdAndName;
 	} catch (error) {
 		console.error('Error fetching user name:', error);
 		return null;
