@@ -1,10 +1,10 @@
 import { Button } from '@/components/ui/button';
 import { useState, useEffect } from 'react';
 import { getCurrentUser } from 'aws-amplify/auth';
-import axios from 'axios';
 import { ProfileInfoType } from '@/types/index';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { fetchUserInfo } from '@/services/userInfoService';
 
 function DisPlayMyPage() {
 	const router = useRouter();
@@ -12,40 +12,13 @@ function DisPlayMyPage() {
 	const [Loading, setLoading] = useState<boolean>(true);
 
 	useEffect(() => {
-		try {
-			const fetchProfileInfo = async () => {
-				const { userId } = await getCurrentUser();
-				const res = await axios.get(
-					`${process.env.NEXT_PUBLIC_VITE_GO_APP_API_URL}/v1/userInfo/${userId}`,
-				);
-				console.log(res);
-				console.log(res.data);
-				setProfileInfo({
-					firstName: res.data.userInfo.user_first_name,
-					lastName: res.data.userInfo.user_last_name,
-					firstname_kana: res.data.userInfo.user_first_name_kana,
-					lastname_kana: res.data.userInfo.user_last_name_kana,
-					birthday: res.data.userInfo.birth_date,
-					hobby: res.data.userInfo.hobby,
-					gender: res.data.userInfo.gender,
-					organization: res.data.userInfo.organization,
-					holidayactivity: res.data.userInfo.holiday_activity,
-					weaknesses: res.data.userInfo.weakness,
-					favoriteColor: res.data.userInfo.favorite_color,
-					favoriteAnimal: res.data.userInfo.favorite_animal,
-					favoritePlace: res.data.userInfo.favorite_place,
-					language: res.data.userInfo.language,
-					nickname: res.data.userInfo.nickname,
-					icon: res.data.userInfo.icon,
-				});
-				setLoading(false);
-			};
-			fetchProfileInfo();
-		} catch (error) {
-			console.error('Error during fetch profile info:', error);
+		const loadUserInfo = async () => {
+			const { userId } = await getCurrentUser();
+			const userInfo = await fetchUserInfo(userId);
+			setProfileInfo(userInfo);
 			setLoading(false);
-		}
-		console.log('profileInfo:', profileInfo);
+		};
+		loadUserInfo();
 	}, []);
 
 	if (Loading) {
