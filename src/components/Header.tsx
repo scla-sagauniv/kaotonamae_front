@@ -3,9 +3,11 @@ import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { signOut } from 'aws-amplify/auth';
 import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/navigation';
+import { useMyInfoStore } from '@/store/myInfoStore';
 
 function Header() {
 	const router = useRouter();
+	const { myId } = useMyInfoStore();
 	const handleSignOut = async () => {
 		try {
 			await signOut();
@@ -34,7 +36,7 @@ function Header() {
 					<span
 						className="text-[8px] mt-1"
 						onClick={() => {
-							router.push('/MyPage');
+							router.push(`/MyPage/${myId}`);
 						}}
 					>
 						マイページ
