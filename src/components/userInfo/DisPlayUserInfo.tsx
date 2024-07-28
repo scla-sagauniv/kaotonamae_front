@@ -1,20 +1,20 @@
 import { Button } from '@/components/ui/button';
 import { useState, useEffect } from 'react';
-import { getCurrentUser } from 'aws-amplify/auth';
 import { ProfileInfoType } from '@/types/index';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+import { useRouter, useParams } from 'next/navigation';
 import { fetchUserInfo } from '@/services/userInfoService';
 
-function DisPlayMyPage() {
+function DisPlayUserInfo() {
 	const router = useRouter();
+	const { userId } = useParams();
 	const [profileInfo, setProfileInfo] = useState<ProfileInfoType | null>(null);
 	const [Loading, setLoading] = useState<boolean>(true);
 
 	useEffect(() => {
 		const loadUserInfo = async () => {
-			const { userId } = await getCurrentUser();
-			const userInfo = await fetchUserInfo(userId);
+			const id = Array.isArray(userId) ? userId[0] : userId;
+			const userInfo = await fetchUserInfo(id);
 			setProfileInfo(userInfo);
 			setLoading(false);
 		};
@@ -32,7 +32,11 @@ function DisPlayMyPage() {
 					<div className="flex justify-center">
 						<div className="w-[300px] h-[300px] rounded-full overflow-hidden flex justify-center items-center">
 							<Image
-								src={profileInfo.icon}
+								src={
+									profileInfo.icon
+										? profileInfo.icon
+										: 'https://kotonohaworks.com/free-icons/wp-content/uploads/kkrn_icon_user_6.png'
+								}
 								height={400} // 親要素より大きく設定
 								width={400} // 親要素より大きく設定
 								alt="ユーザのアイコン"
@@ -133,4 +137,4 @@ function DisPlayMyPage() {
 	);
 }
 
-export default DisPlayMyPage;
+export default DisPlayUserInfo;

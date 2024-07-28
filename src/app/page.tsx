@@ -9,27 +9,32 @@ import { GroupType } from '@/types/index';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import { useMyInfoStore } from '@/store/myInfoStore';
 
 export default function Home() {
 	const router = useRouter();
 	const { isOneTimePass, setOneTimePassFalse } = useOneTimePassStore();
+	const { setMyId } = useMyInfoStore();
 	const [objects, setObjects] = useState<GroupType[]>([]);
 	const [error, setError] = useState<string | null>(null);
 	const [groupNum, setGroupNum] = useState<number>(0);
 	const [userId, setUserId] = useState<string | null>(null);
 
 	useEffect(() => {
+		const setMyUserId = async () => {
+			const { userId } = await getCurrentUser();
+			console.log('userId: ', userId);
+			setMyId(userId);
+		};
+		setMyUserId();
+
 		const fetchUserAndGroups = async () => {
 			try {
 				setOneTimePassFalse();
 				console.log('isOneTimePass: ', isOneTimePass);
 
-				const { userId, username, signInDetails } = await getCurrentUser();
-				console.log('user id: ', userId);
-				console.log('username: ', username);
-				console.log('sign-in details: ', signInDetails);
+				const { userId } = await getCurrentUser();
 				setUserId(userId);
-				console.log('userId: ', userId);
 
 				const res = await axios.get(
 					`${process.env.NEXT_PUBLIC_VITE_GO_APP_API_URL}/v1/group/user/${userId}`,
@@ -44,7 +49,6 @@ export default function Home() {
 					setGroupNum(res.data.groups.length);
 				} else {
 					setObjects([]);
-					console.log('No data');
 					setError('グループが見つかりませんでした。');
 				}
 			} catch (error) {
