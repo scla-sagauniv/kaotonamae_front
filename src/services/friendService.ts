@@ -30,6 +30,7 @@ export const fetchUserName = async (userId: string) => {
 		const userIdAndName = {
 			userId: userId,
 			userName: userName,
+			userIcon: res.data.userInfo.icon,
 		};
 		return userIdAndName;
 	} catch (error) {

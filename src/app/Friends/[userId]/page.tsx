@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 import { fetchFriends, fetchUserName } from '@/services/friendService';
 import { FriendNameType } from '@/types';
 import Link from 'next/link';
+import Image from 'next/image';
 
 function Friends() {
 	const router = useRouter();
@@ -38,7 +39,19 @@ function Friends() {
 							key={index}
 							className="flex flex-raw items-center border border-black h-[50px] space-x-2 w-full p-3"
 						>
-							<div className="rounded-full bg-gray-200 w-10 h-10 ml-2"></div>
+							<div className="rounded-full bg-gray-200 w-[40px] h-[40px] ml-2 overflow-hidden">
+								<Image
+									src={
+										object.userIcon
+											? object.userIcon
+											: 'https://kotonohaworks.com/free-icons/wp-content/uploads/kkrn_icon_user_6.png'
+									}
+									height={70}
+									width={70}
+									alt="ユーザのアイコン"
+									className="object-cover"
+								/>
+							</div>
 							<p>{object.userName}</p>
 						</Link>
 					))}

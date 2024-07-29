@@ -68,4 +68,5 @@ export type QuizType = {
 export type FriendNameType = {
 	userId: string;
 	userName: string;
+	userIcon: string;
 };
