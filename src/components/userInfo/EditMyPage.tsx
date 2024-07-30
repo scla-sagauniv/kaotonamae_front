@@ -4,7 +4,6 @@ import { Controller, useForm } from 'react-hook-form';
 import { Button } from '@/components/ui/button';
 import { getCurrentUser } from 'aws-amplify/auth';
 import { useRouter } from 'next/navigation';
-import { CreateUserInfo } from '@/services/userInfoService';
 
 import {
 	Select,
@@ -13,11 +12,11 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from '@/components/ui/select';
-import { ProfileInfoType } from '@/types/index';
+import { ProfileInfoType, EditMyPageProps } from '@/types/index';
 import { ProfileSchema } from '@/utils/validationSchema';
 import { useEffect, useState } from 'react';
 
-const EditMyPage = () => {
+const EditMyPage: React.FC<EditMyPageProps> = ({ UserInfoFunction }) => {
 	const router = useRouter();
 
 	const [userId, setUserId] = useState<string>('');
@@ -84,7 +83,7 @@ const EditMyPage = () => {
 			return;
 		}
 
-		await CreateUserInfo(data, userId, uploadImageUrl);
+		await UserInfoFunction(data, userId, uploadImageUrl);
 		router.push('/');
 	};
 

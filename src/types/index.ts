@@ -70,3 +70,11 @@ export type FriendNameType = {
 	userName: string;
 	userIcon: string;
 };
+
+export type EditMyPageProps = {
+	UserInfoFunction: (
+		data: ProfileInfoType,
+		userId: string,
+		upLoadImageUrl: string,
+	) => Promise<void>;
+};

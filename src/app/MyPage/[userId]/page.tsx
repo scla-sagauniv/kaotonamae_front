@@ -5,6 +5,7 @@ import { useState } from 'react';
 import EditMyPage from '@/components/userInfo/EditMyPage';
 import DisPlayUserInfo from '@/components/userInfo/DisPlayUserInfo';
 import { Button } from '@/components/ui/button';
+import { CreateUserInfo } from '@/services/userInfoService';
 
 const MyPage = () => {
 	const [isEdit, setIsEdit] = useState<boolean>(false);
@@ -21,7 +22,13 @@ const MyPage = () => {
 				>
 					{isEdit ? '戻る' : '編集'}
 				</Button>
-				<div>{isEdit ? <EditMyPage /> : <DisPlayUserInfo />}</div>
+				<div>
+					{isEdit ? (
+						<EditMyPage UserInfoFunction={CreateUserInfo} />
+					) : (
+						<DisPlayUserInfo />
+					)}
+				</div>
 			</div>
 		</>
 	);
