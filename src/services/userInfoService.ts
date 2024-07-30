@@ -1,3 +1,4 @@
+import { ProfileInfoType } from '@/types';
 import axios from 'axios';
 
 export const fetchUserInfo = async (userId: string) => {
@@ -27,5 +28,39 @@ export const fetchUserInfo = async (userId: string) => {
 	} catch (error) {
 		console.error('Error fetching user info:', error);
 		return null;
+	}
+};
+
+export const CreateUserInfo = async (
+	data: ProfileInfoType,
+	userId: string,
+	upLoadImageUrl: string,
+) => {
+	try {
+		const res = await axios.post(
+			`${process.env.NEXT_PUBLIC_VITE_GO_APP_API_URL}/v1/userInfo/`,
+			{
+				user_id: userId,
+				user_last_name: data.lastName,
+				user_first_name: data.firstName,
+				user_last_name_kana: data.lastname_kana,
+				user_first_name_kana: data.firstname_kana,
+				gender: data.gender,
+				icon: upLoadImageUrl,
+				birth_date: data.birthday,
+				hobby: data.hobby,
+				organization: data.organization,
+				holiday_activity: data.holidayactivity,
+				weakness: data.weaknesses,
+				favorite_color: data.favoriteColor,
+				favorite_animal: data.favoriteAnimal,
+				favorite_place: data.favoritePlace,
+				language: data.language,
+				nickname: data.nickname,
+			},
+		);
+		console.log('Create Profile : ', res);
+	} catch (err) {
+		console.error('プロフィールの作成に失敗しました', err);
 	}
 };
