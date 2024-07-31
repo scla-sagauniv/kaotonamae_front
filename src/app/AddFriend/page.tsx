@@ -9,7 +9,6 @@ function AddFriend() {
 
 	const onNewScanResult = (result: any) => {
 		console.log('QRコードスキャン結果');
-		console.log(result);
 		setScannedResult(result);
 	};
 	return (
@@ -21,7 +20,7 @@ function AddFriend() {
 			<QRCodeReader
 				onScanSuccess={onNewScanResult}
 				onScanFailure={(error: any) => {
-					console.log('Qr scan error', error);
+					return error;
 				}}
 			/>
 		</>
