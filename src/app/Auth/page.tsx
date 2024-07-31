@@ -44,7 +44,7 @@ function Auth() {
 			await CreateAuth(userId, confirmEmail, confirmPassword);
 			console.log('メール', confirmEmail);
 			setConfirmPassword('');
-			router.push('/');
+			router.push('/NewMyInfo/${userId}');
 		} catch (error) {
 			console.error('Error during confirm sign up:', error);
 			console.log(data.otp);
