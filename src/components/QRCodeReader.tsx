@@ -58,7 +58,7 @@ function QRCodeReader({
 				(result: any) => {
 					onScanSuccess(result);
 					Html5QrcodeScanner.stop();
-					router.push('/Friends');
+					router.push('/');
 				},
 				onScanFailure,
 			);
