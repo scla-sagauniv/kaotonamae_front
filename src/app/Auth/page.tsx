@@ -18,18 +18,13 @@ import { confirmSignUp, signIn } from 'aws-amplify/auth';
 import { OneTimePassType } from '@/types';
 import { Input } from '@/components/ui/input';
 import { useRouter } from 'next/navigation';
-import axios from 'axios';
 import { getCurrentUser } from 'aws-amplify/auth';
+import { CreateAuth } from '@/services/authService';
 
 function Auth() {
 	const router = useRouter();
-	const {
-		isOneTimePass,
-		confirmEmail,
-		setConfirmEmail,
-		confirmPassword,
-		setConfirmPassword,
-	} = useOneTimePassStore();
+	const { isOneTimePass, confirmEmail, confirmPassword, setConfirmPassword } =
+		useOneTimePassStore();
 
 	const { register, handleSubmit } = useForm<OneTimePassType>();
 
@@ -45,18 +40,9 @@ function Auth() {
 				password: confirmPassword,
 			});
 			console.log('Sign In', userData);
-			setConfirmEmail('');
 			const { userId } = await getCurrentUser();
-			const res = await axios.post(
-				`${process.env.NEXT_PUBLIC_VITE_GO_APP_API_URL}/v1/auth/`,
-				{
-					user_id: userId,
-					email: confirmEmail,
-					password: confirmPassword,
-				},
-			);
-			console.log(res);
-			console.log(userId);
+			await CreateAuth(userId, confirmEmail, confirmPassword);
+			console.log('メール', confirmEmail);
 			setConfirmPassword('');
 			router.push('/');
 		} catch (error) {
