@@ -7,7 +7,7 @@ import Header from '@/components/Header';
 function AddFriend() {
 	const [scannedResult, setScannedResult] = useState('');
 
-	const onNewScanResult = (result: any) => {
+	const onNewScanResult = (result: string) => {
 		console.log('QRコードスキャン結果');
 		setScannedResult(result);
 	};
@@ -19,7 +19,7 @@ function AddFriend() {
 			</div>
 			<QRCodeReader
 				onScanSuccess={onNewScanResult}
-				onScanFailure={(error: any) => {
+				onScanFailure={(error: string) => {
 					return error;
 				}}
 			/>

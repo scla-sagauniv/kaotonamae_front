@@ -6,15 +6,15 @@ function QRCodeReader({
 	onScanSuccess,
 	onScanFailure,
 }: {
-	onScanSuccess: any;
-	onScanFailure: any;
+	onScanSuccess: (result: string) => void;
+	onScanFailure: (error: string) => void;
 }) {
 	const router = useRouter();
 	const qrcodeRegionId = 'html5qr-code-full-region';
 
 	const config = { fps: 1, qrbox: { width: 250, height: 250 } };
 
-	const scannerRef = useRef<any>(null);
+	const scannerRef = useRef<Html5Qrcode | null>(null);
 
 	useEffect(() => {
 		console.log('QRCodeReader mounted');
@@ -29,9 +29,11 @@ function QRCodeReader({
 				await scannerRef.current.start(
 					formattedCameras[0].value,
 					config,
-					async (result: any) => {
+					async (result: string) => {
 						onScanSuccess(result);
-						await scannerRef.current.stop();
+						if (scannerRef.current) {
+							await scannerRef.current.stop();
+						}
 						router.push('/');
 					},
 					onScanFailure,
@@ -41,7 +43,9 @@ function QRCodeReader({
 		loadCamera();
 
 		return () => {
-			scannerRef.current.clear();
+			if (scannerRef.current) {
+				scannerRef.current.clear();
+			}
 		};
 	}, []);
 
