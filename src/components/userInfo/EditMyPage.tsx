@@ -4,7 +4,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { Button } from '@/components/ui/button';
 import { getCurrentUser } from 'aws-amplify/auth';
 import { useRouter } from 'next/navigation';
-
+import Image from 'next/image';
 import {
 	Select,
 	SelectContent,
@@ -92,15 +92,15 @@ const EditMyPage: React.FC<EditMyPageProps> = ({ UserInfoFunction }) => {
 			<div className="max-h-screen w-full p-4">
 				<form onSubmit={handleSubmit(onSubmit)}>
 					<div className="flex flex-col items-center w-full justify-center">
-						<img
-							src={
-								file
-									? URL.createObjectURL(file)
-									: 'https://icooon-mono.com/i/icon_14440/icon_144400_256.png'
-							}
-							alt=""
-							className="rounded-full w-[300px] h-[300px] object-cover border border-black"
-						/>
+						<div className="w-[300px] h-[300px] rounded-full overflow-hidden flex justify-center items-center border border-black">
+							<Image
+								src={file ? URL.createObjectURL(file) : ''}
+								height={400}
+								width={400}
+								alt="ユーザのアイコン"
+								className="object-cover"
+							/>
+						</div>
 						<input
 							type="file"
 							accept="image/png, image/jpeg"
