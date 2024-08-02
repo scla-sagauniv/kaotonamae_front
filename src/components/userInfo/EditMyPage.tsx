@@ -15,17 +15,22 @@ import {
 import { ProfileInfoType, EditMyPageProps } from '@/types/index';
 import { ProfileSchema } from '@/utils/validationSchema';
 import { useEffect, useState } from 'react';
+import { fetchUserInfo } from '@/services/userInfoService';
 
 const EditMyPage: React.FC<EditMyPageProps> = ({ UserInfoFunction }) => {
 	const router = useRouter();
 
 	const [userId, setUserId] = useState<string>('');
 	const [file, setFile] = useState<File | null>(null);
+	const [profileInfo, setProfileInfo] = useState<ProfileInfoType | null>(null);
 
 	useEffect(() => {
 		const fetchUser = async () => {
 			const { userId } = await getCurrentUser();
 			setUserId(userId);
+			const userInfo = await fetchUserInfo(userId);
+			console.log('userInfo', userInfo);
+			setProfileInfo(userInfo);
 		};
 		fetchUser();
 	}, []);
@@ -94,7 +99,7 @@ const EditMyPage: React.FC<EditMyPageProps> = ({ UserInfoFunction }) => {
 					<div className="flex flex-col items-center w-full justify-center">
 						<div className="w-[300px] h-[300px] rounded-full overflow-hidden flex justify-center items-center border border-black">
 							<Image
-								src={file ? URL.createObjectURL(file) : ''}
+								src={file ? URL.createObjectURL(file) : profileInfo?.icon || ''}
 								height={400}
 								width={400}
 								alt="ユーザのアイコン"
@@ -111,7 +116,7 @@ const EditMyPage: React.FC<EditMyPageProps> = ({ UserInfoFunction }) => {
 						<label className="block text-gray-700 font-bold mb-2">姓</label>
 						<Input
 							{...register('lastName')}
-							placeholder="姓"
+							placeholder={profileInfo?.lastName}
 							className="w-full p-2 border-gray-300 rounded-md"
 						/>
 						{errors.lastName && (
@@ -125,7 +130,7 @@ const EditMyPage: React.FC<EditMyPageProps> = ({ UserInfoFunction }) => {
 						<label className="block text-gray-700 font-bold mb-2">名</label>
 						<Input
 							{...register('firstName')}
-							placeholder="名"
+							placeholder={profileInfo?.firstName}
 							className="w-full p-2 border-gray-300 rounded-md"
 						/>
 						{errors.firstName && (
@@ -139,7 +144,7 @@ const EditMyPage: React.FC<EditMyPageProps> = ({ UserInfoFunction }) => {
 						<label className="block text-gray-700 font-bold mb-2">セイ</label>
 						<Input
 							{...register('lastname_kana')}
-							placeholder="セイ"
+							placeholder={profileInfo?.lastname_kana}
 							className="w-full p-2 border-gray-300 rounded-md"
 						/>
 						{errors.lastname_kana && (
@@ -153,7 +158,7 @@ const EditMyPage: React.FC<EditMyPageProps> = ({ UserInfoFunction }) => {
 						<label className="block text-gray-700 font-bold mb-2">メイ</label>
 						<Input
 							{...register('firstname_kana')}
-							placeholder="メイ"
+							placeholder={profileInfo?.firstname_kana}
 							className="w-full p-2 border-gray-300 rounded-md"
 						/>
 						{errors.firstname_kana && (
@@ -171,7 +176,7 @@ const EditMyPage: React.FC<EditMyPageProps> = ({ UserInfoFunction }) => {
 							render={({ field }) => (
 								<Select onValueChange={field.onChange} value={field.value}>
 									<SelectTrigger className="w-[180px] text-border-gray-300 rounded-md">
-										<SelectValue placeholder="性別" />
+										<SelectValue placeholder={profileInfo?.gender} />
 									</SelectTrigger>
 									<SelectContent>
 										<SelectItem value="男性">男性</SelectItem>
@@ -188,7 +193,7 @@ const EditMyPage: React.FC<EditMyPageProps> = ({ UserInfoFunction }) => {
 							type="date"
 							min="2024-01-01"
 							max="2024-12-31"
-							placeholder="誕生日"
+							placeholder={profileInfo?.birthday}
 							className="w-full p-2 border-gray-300 rounded-md"
 						/>
 					</div>
@@ -196,7 +201,7 @@ const EditMyPage: React.FC<EditMyPageProps> = ({ UserInfoFunction }) => {
 						<label className="block text-gray-700 font-bold mb-2">趣味</label>
 						<Input
 							{...register('hobby')}
-							placeholder="趣味"
+							placeholder={profileInfo?.hobby}
 							className="w-full p-2 border-gray-300 rounded-md"
 						/>
 						{errors.hobby && (
@@ -212,7 +217,7 @@ const EditMyPage: React.FC<EditMyPageProps> = ({ UserInfoFunction }) => {
 						</label>
 						<Input
 							{...register('organization')}
-							placeholder="所属組織"
+							placeholder={profileInfo?.organization}
 							className="w-full p-2 border-gray-300 rounded-md"
 						/>
 					</div>
@@ -223,7 +228,7 @@ const EditMyPage: React.FC<EditMyPageProps> = ({ UserInfoFunction }) => {
 						</label>
 						<Input
 							{...register('holidayactivity')}
-							placeholder="休日にやってること"
+							placeholder={profileInfo?.holidayactivity}
 							className="w-full p-2 border-gray-300 rounded-md"
 						/>
 					</div>
@@ -234,7 +239,7 @@ const EditMyPage: React.FC<EditMyPageProps> = ({ UserInfoFunction }) => {
 						</label>
 						<Input
 							{...register('weaknesses')}
-							placeholder="苦手なこと"
+							placeholder={profileInfo?.weaknesses}
 							className="w-full p-2 border-gray-300 rounded-md"
 						/>
 					</div>
@@ -244,7 +249,7 @@ const EditMyPage: React.FC<EditMyPageProps> = ({ UserInfoFunction }) => {
 						</label>
 						<Input
 							{...register('favoriteColor')}
-							placeholder="好きな色"
+							placeholder={profileInfo?.favoriteColor}
 							className="w-full p-2 border-gray-300 rounded-md"
 						/>
 					</div>
@@ -254,7 +259,7 @@ const EditMyPage: React.FC<EditMyPageProps> = ({ UserInfoFunction }) => {
 						</label>
 						<Input
 							{...register('favoriteAnimal')}
-							placeholder="好きな動物"
+							placeholder={profileInfo?.favoriteAnimal}
 							className="w-full p-2 border-gray-300 rounded-md"
 						/>
 					</div>
@@ -264,7 +269,7 @@ const EditMyPage: React.FC<EditMyPageProps> = ({ UserInfoFunction }) => {
 						</label>
 						<Input
 							{...register('favoritePlace')}
-							placeholder="好きな場所"
+							placeholder={profileInfo?.favoritePlace}
 							className="w-full p-2 border-gray-300 rounded-md"
 						/>
 					</div>
@@ -272,7 +277,7 @@ const EditMyPage: React.FC<EditMyPageProps> = ({ UserInfoFunction }) => {
 						<label className="block text-gray-700 font-bold mb-2">言語</label>
 						<Input
 							{...register('language')}
-							placeholder="言語"
+							placeholder={profileInfo?.language}
 							className="w-full p-2 border-gray-300 rounded-md"
 						/>
 					</div>
@@ -280,7 +285,7 @@ const EditMyPage: React.FC<EditMyPageProps> = ({ UserInfoFunction }) => {
 						<label className="block text-gray-700 font-bold mb-2">あだ名</label>
 						<Input
 							{...register('nickname')}
-							placeholder="あだ名"
+							placeholder={profileInfo?.nickname}
 							className="w-full p-2 border-gray-300 rounded-md"
 						/>
 					</div>
