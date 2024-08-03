@@ -38,3 +38,19 @@ export const fetchUserName = async (userId: string) => {
 		return null;
 	}
 };
+
+export const CreateFriend = async (userId: string, friendId: string) => {
+	try {
+		const res = await axios.post(
+			`${process.env.NEXT_PUBLIC_VITE_GO_APP_API_URL}/v1/friend/`,
+			{
+				user_id1: userId,
+				user_id2: friendId,
+			},
+		);
+		return res.data;
+	} catch (error) {
+		console.error('Error creating friend:', error);
+		return null;
+	}
+};

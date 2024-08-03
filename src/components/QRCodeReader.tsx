@@ -1,6 +1,8 @@
 import { Html5Qrcode } from 'html5-qrcode';
 import { useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
+import { CreateFriend } from '@/services/friendService';
+import { getCurrentUser } from 'aws-amplify/auth';
 
 function QRCodeReader({
 	onScanSuccess,
@@ -31,6 +33,8 @@ function QRCodeReader({
 					config,
 					async (result: string) => {
 						onScanSuccess(result);
+						const { userId } = await getCurrentUser();
+						await CreateFriend(userId, result);
 						if (scannerRef.current) {
 							await scannerRef.current.stop();
 						}
