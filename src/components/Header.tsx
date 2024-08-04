@@ -18,7 +18,7 @@ function Header() {
 		}
 	};
 	return (
-		<div className="flex justify-between items-center p-4 bg-sky-600 text-white fixed top-0 w-full">
+		<div className="flex justify-between items-center p-4 bg-sky-600 text-white fixed top-0 w-full z-50">
 			<div
 				className="font-bold"
 				onClick={() => {

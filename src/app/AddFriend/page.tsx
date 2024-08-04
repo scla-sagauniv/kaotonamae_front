@@ -10,19 +10,19 @@ function AddFriend() {
 	const onNewScanResult = (result: string) => {
 		console.log('QRコードスキャン結果');
 		setScannedResult(result);
+		console.log('スキャン結果', scannedResult);
 	};
 	return (
 		<>
 			<Header />
-			<div className="mt-[75px]">
-				<h2>スキャン結果：{scannedResult}</h2>
+			<div className="flex flex-col justify-center h-screen">
+				<QRCodeReader
+					onScanSuccess={onNewScanResult}
+					onScanFailure={(error: string) => {
+						return error;
+					}}
+				/>
 			</div>
-			<QRCodeReader
-				onScanSuccess={onNewScanResult}
-				onScanFailure={(error: string) => {
-					return error;
-				}}
-			/>
 		</>
 	);
 }
