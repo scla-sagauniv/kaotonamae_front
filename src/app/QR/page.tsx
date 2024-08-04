@@ -24,11 +24,11 @@ function QR() {
 				<QRCode value={qrValue} size={300} />
 				<Button
 					onClick={() => {
-						router.push('/Friends');
+						router.push(`/`);
 					}}
 					className="mt-10 w-3/4"
 				>
-					戻る
+					ホームへ
 				</Button>
 			</div>
 		</div>
