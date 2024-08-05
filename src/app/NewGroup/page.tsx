@@ -10,6 +10,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { GroupType } from '@/types/index';
 import { getCurrentUser } from 'aws-amplify/auth';
+import Image from 'next/image';
 
 function NewGroup() {
 	const router = useRouter();
@@ -50,8 +51,17 @@ function NewGroup() {
 		<div className="h-screen w-screen">
 			<Header />
 			<form onSubmit={handleSubmit(onSubmit)} className="mt-[74px]">
-				<div className="flex flex-row justify-center w-full mt-10 space-x-5">
-					<div className="rounded-full bg-gray-200 w-[100px] h-[100px]"></div>
+				<div className="flex flex-row justify-center w-full mt-10 space-x-3">
+					{/* <div className="rounded-full bg-gray-200 w-[100px] h-[100px]"></div> */}
+					<div className="w-[100px] h-[100px] rounded-full overflow-hidden flex justify-center items-center border border-black">
+						<Image
+							src=""
+							alt="groupIcon"
+							width={100}
+							height={100}
+							className="rounded-full"
+						/>
+					</div>
 					<div className="flex flex-col">
 						<label htmlFor="groupName" className="text-[20px]">
 							グループの名前
@@ -71,6 +81,11 @@ function NewGroup() {
 				</div>
 				<div className="flex flex-col items-center w-full mt-[20px]">
 					<div className="flex flex-col">
+						<input
+							type="file"
+							accept="image/png, image/jpeg"
+							className="mt-4"
+						/>
 						<label htmlFor="description" className="text-[20px]">
 							グループの説明
 						</label>
