@@ -2,7 +2,6 @@
 
 import { getCurrentUser } from 'aws-amplify/auth';
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 import { useOneTimePassStore } from '@/store/oneTimePassStore';
 import Header from '@/components/Header';
 import { GroupType } from '@/types/index';
@@ -14,7 +13,7 @@ import { fetchGroups } from '@/services/grouoService';
 
 export default function Home() {
 	const router = useRouter();
-	const { isOneTimePass, setOneTimePassFalse } = useOneTimePassStore();
+	const { setOneTimePassFalse } = useOneTimePassStore();
 	const { setMyId } = useMyInfoStore();
 	const [objects, setObjects] = useState<GroupType[]>([]);
 	const [error, setError] = useState<string | null>(null);
@@ -22,6 +21,7 @@ export default function Home() {
 	const [userId, setUserId] = useState<string | null>(null);
 
 	useEffect(() => {
+		setOneTimePassFalse();
 		const setMyUserId = async () => {
 			const { userId } = await getCurrentUser();
 			console.log('userId: ', userId);
