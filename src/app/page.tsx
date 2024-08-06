@@ -10,6 +10,7 @@ import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { useMyInfoStore } from '@/store/myInfoStore';
+import { fetchGroups } from '@/services/grouoService';
 
 export default function Home() {
 	const router = useRouter();
@@ -28,36 +29,19 @@ export default function Home() {
 		};
 		setMyUserId();
 
-		const fetchUserAndGroups = async () => {
-			try {
-				setOneTimePassFalse();
-				console.log('isOneTimePass: ', isOneTimePass);
-
-				const { userId } = await getCurrentUser();
-				setUserId(userId);
-
-				const res = await axios.get(
-					`${process.env.NEXT_PUBLIC_VITE_GO_APP_API_URL}/v1/group/user/${userId}`,
-				);
-
-				if (res.data.groups && res.data.groups.length > 0) {
-					const mappedGroups = res.data.groups.map((group: GroupType) => ({
-						group_id: group.group_id,
-						group_name: group.group_name,
-					}));
-					setObjects(mappedGroups);
-					setGroupNum(res.data.groups.length);
-				} else {
-					setObjects([]);
-					setError('グループが見つかりませんでした。');
-				}
-			} catch (error) {
-				console.error('Error fetching user or groups:', error);
-				setError('データを取得中にエラーが発生しました。');
+		const loadGroups = async () => {
+			const { userId } = await getCurrentUser();
+			setUserId(userId);
+			const groups = await fetchGroups(userId);
+			if (groups && groups.length > 0) {
+				setObjects(groups);
+				setGroupNum(groups.length);
+			} else {
+				setObjects([]);
+				setError('グループが見つかりませんでした。');
 			}
 		};
-
-		fetchUserAndGroups();
+		loadGroups();
 	}, []);
 
 	return (
