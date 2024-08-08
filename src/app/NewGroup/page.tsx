@@ -7,10 +7,10 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { GroupSchema } from '@/utils/validationSchema';
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 import { GroupType } from '@/types/index';
 import { getCurrentUser } from 'aws-amplify/auth';
 import Image from 'next/image';
+import { CreateGroup } from '@/services/grouoService';
 
 function NewGroup() {
 	const router = useRouter();
@@ -35,15 +35,7 @@ function NewGroup() {
 	});
 
 	const onSubmit = async (data: GroupType) => {
-		const res = await axios.post(
-			`${process.env.NEXT_PUBLIC_VITE_GO_APP_API_URL}/v1/group/`,
-			{
-				user_id: userId,
-				group_name: data.group_name,
-				group_description: data.group_description,
-			},
-		);
-		console.log('Create Group : ', res);
+		await CreateGroup(userId, data);
 		router.push('/');
 	};
 
@@ -52,7 +44,6 @@ function NewGroup() {
 			<Header />
 			<form onSubmit={handleSubmit(onSubmit)} className="mt-[74px]">
 				<div className="flex flex-row justify-center w-full mt-10 space-x-3">
-					{/* <div className="rounded-full bg-gray-200 w-[100px] h-[100px]"></div> */}
 					<div className="w-[100px] h-[100px] rounded-full overflow-hidden flex justify-center items-center border border-black">
 						<Image
 							src=""
