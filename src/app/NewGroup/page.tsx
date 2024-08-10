@@ -55,7 +55,7 @@ function NewGroup() {
 			return;
 		}
 
-		await CreateGroup(userId, data);
+		await CreateGroup(userId, data, uploadImageUrl);
 		router.push('/');
 	};
 

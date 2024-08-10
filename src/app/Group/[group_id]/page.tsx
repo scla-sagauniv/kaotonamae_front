@@ -15,6 +15,7 @@ function GroupPage() {
 		group_id: group_id.toString(),
 		group_name: '',
 		group_description: '',
+		group_icon: '',
 	});
 
 	useEffect(() => {

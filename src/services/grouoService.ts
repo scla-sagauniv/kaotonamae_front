@@ -17,7 +17,11 @@ export const fetchGroups = async (UserId: string) => {
 	}
 };
 
-export const CreateGroup = async (userId: string, data: GroupType) => {
+export const CreateGroup = async (
+	userId: string,
+	data: GroupType,
+	upLoadImageUrl: string,
+) => {
 	try {
 		const res = await axios.post(
 			`${process.env.NEXT_PUBLIC_VITE_GO_APP_API_URL}/v1/group/`,
@@ -25,6 +29,7 @@ export const CreateGroup = async (userId: string, data: GroupType) => {
 				user_id: userId,
 				group_name: data.group_name,
 				group_description: data.group_description,
+				group_icon: upLoadImageUrl,
 			},
 		);
 		return res;

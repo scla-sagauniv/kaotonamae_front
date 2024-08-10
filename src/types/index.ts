@@ -36,6 +36,7 @@ export type GroupType = {
 	group_id: string;
 	group_name: string;
 	group_description: string;
+	group_icon: string;
 };
 
 export type GroupMemberType = {
