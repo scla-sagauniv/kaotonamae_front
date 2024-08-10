@@ -16,6 +16,7 @@ import { ProfileInfoType, EditMyPageProps } from '@/types/index';
 import { ProfileSchema } from '@/utils/validationSchema';
 import { useEffect, useState } from 'react';
 import { fetchUserInfo } from '@/services/userInfoService';
+import { handleImageUpload } from '@/services/uploadService';
 
 const EditMyPage: React.FC<EditMyPageProps> = ({ UserInfoFunction }) => {
 	const router = useRouter();
@@ -44,29 +45,6 @@ const EditMyPage: React.FC<EditMyPageProps> = ({ UserInfoFunction }) => {
 		resolver: zodResolver(ProfileSchema),
 		mode: 'onChange',
 	});
-
-	const handleImageUpload = async (file: File): Promise<string | null> => {
-		const formData = new FormData();
-		formData.append('file', file);
-		formData.append('filename', file.name);
-
-		try {
-			const res = await fetch(`/api/kaotonamae/upload?filename=${file.name}`, {
-				method: 'POST',
-				body: formData,
-			});
-
-			if (!res.ok) {
-				console.error('画像のアップロードに失敗しました');
-			}
-
-			const jsonRes = await res.json();
-			return jsonRes.imageUrl;
-		} catch (err) {
-			console.error('画像のアップロードに失敗しました', err);
-			return null;
-		}
-	};
 
 	const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		if (e.target.files && e.target.files[0]) {
