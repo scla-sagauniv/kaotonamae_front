@@ -11,10 +11,12 @@ import { GroupType } from '@/types/index';
 import { getCurrentUser } from 'aws-amplify/auth';
 import Image from 'next/image';
 import { CreateGroup } from '@/services/grouoService';
+import { handleImageUpload } from '@/services/uploadService';
 
 function NewGroup() {
 	const router = useRouter();
 	const [userId, setUserId] = useState<string>('');
+	const [file, setFile] = useState<File | null>(null);
 
 	useEffect(() => {
 		const fetchUser = async () => {
@@ -34,7 +36,25 @@ function NewGroup() {
 		mode: 'onChange',
 	});
 
+	const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		if (e.target.files && e.target.files[0]) {
+			setFile(e.target.files[0]);
+		}
+	};
+
 	const onSubmit = async (data: GroupType) => {
+		if (!file) {
+			console.log('画像が選択されていません');
+			return;
+		}
+
+		const uploadImageUrl = await handleImageUpload(file);
+
+		if (!uploadImageUrl) {
+			console.log('画像のアップロードに失敗しました');
+			return;
+		}
+
 		await CreateGroup(userId, data);
 		router.push('/');
 	};
@@ -46,7 +66,7 @@ function NewGroup() {
 				<div className="flex flex-row justify-center w-full mt-10 space-x-3">
 					<div className="w-[100px] h-[100px] rounded-full overflow-hidden flex justify-center items-center border border-black">
 						<Image
-							src=""
+							src={file ? URL.createObjectURL(file) : ''}
 							alt="groupIcon"
 							width={100}
 							height={100}
@@ -76,6 +96,7 @@ function NewGroup() {
 							type="file"
 							accept="image/png, image/jpeg"
 							className="mt-4"
+							onChange={handleImageChange}
 						/>
 						<label htmlFor="description" className="text-[20px]">
 							グループの説明
