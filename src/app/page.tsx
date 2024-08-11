@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { useMyInfoStore } from '@/store/myInfoStore';
 import { fetchGroups } from '@/services/grouoService';
+import Image from 'next/image';
 
 export default function Home() {
 	const router = useRouter();
@@ -62,7 +63,19 @@ export default function Home() {
 								passHref
 								className="flex flex-row items-center border border-black h-[50px] space-x-2 w-full p-3"
 							>
-								<div className="rounded-full bg-gray-200 w-10 h-10 ml-2"></div>
+								<div className="w-10 h-10 rounded-full overflow-hidden flex justify-center items-center border border-black">
+									<Image
+										src={
+											object.group_icon
+												? object.group_icon
+												: 'https://kaotonamae.s3.ap-northeast-1.amazonaws.com/fish.png'
+										}
+										height={50}
+										width={50}
+										alt="グループのアイコン"
+										className="object-cover"
+									/>
+								</div>
 								<p>{object.group_name}</p>
 							</Link>
 						))

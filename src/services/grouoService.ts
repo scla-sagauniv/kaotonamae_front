@@ -9,6 +9,7 @@ export const fetchGroups = async (UserId: string) => {
 		const groups = res.data.groups.map((group: GroupType) => ({
 			group_id: group.group_id,
 			group_name: group.group_name,
+			group_icon: group.group_icon,
 		}));
 		return groups;
 	} catch (error) {
