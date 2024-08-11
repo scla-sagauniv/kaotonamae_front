@@ -18,6 +18,18 @@ export const fetchGroups = async (UserId: string) => {
 	}
 };
 
+export const fetchGroup = async (groupId: string) => {
+	try {
+		const res = await axios.get(
+			`${process.env.NEXT_PUBLIC_VITE_GO_APP_API_URL}/v1/group/${groupId}`,
+		);
+		return res.data.group;
+	} catch (error) {
+		console.error('Error fetching group:', error);
+		return null;
+	}
+};
+
 export const CreateGroup = async (
 	userId: string,
 	data: GroupType,

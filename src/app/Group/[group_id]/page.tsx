@@ -4,8 +4,9 @@ import Header from '@/components/Header';
 import { Button } from '@/components/ui/button';
 import { useRouter, useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 import { GroupType, GroupMemberType } from '@/types/index';
+import { fetchGroup } from '@/services/grouoService';
+import Image from 'next/image';
 
 function GroupPage() {
 	const router = useRouter();
@@ -19,18 +20,12 @@ function GroupPage() {
 	});
 
 	useEffect(() => {
-		const fetchGroupsAndGroupMembers = async () => {
-			try {
-				const Group = await axios.get(
-					`${process.env.NEXT_PUBLIC_VITE_GO_APP_API_URL}/v1/group/${group_id}`,
-				);
-				setGroup(Group.data.group);
-			} catch (error) {
-				console.error('Error fetching groups:', error);
-			}
+		const loadGroup = async () => {
+			const id = Array.isArray(group_id) ? group_id[0] : group_id;
+			const res = await fetchGroup(id);
+			setGroup(res);
 		};
-
-		fetchGroupsAndGroupMembers();
+		loadGroup();
 	}, []);
 
 	return (
@@ -38,7 +33,19 @@ function GroupPage() {
 			<Header />
 			<div className="flex flex-col items-center w-ful">
 				<div className="flex flex-row items-center w-10/12 mt-[10px] space-x-5">
-					<div className="rounded-full bg-gray-200 w-[80px] h-[80px]"></div>
+					<div className="w-[80px] h-[80px] rounded-full overflow-hidden flex justify-center items-center border border-black">
+						<Image
+							src={
+								group.group_icon
+									? group.group_icon
+									: 'https://kaotonamae.s3.ap-northeast-1.amazonaws.com/fish.png'
+							}
+							height={100}
+							width={100}
+							alt="グループのアイコン"
+							className="object-cover rounded-full"
+						/>
+					</div>
 					<div className="text-[20px]">{group.group_name}</div>
 				</div>
 				<div className="border border-black w-10/12 h-[170px] mt-[10px]">
