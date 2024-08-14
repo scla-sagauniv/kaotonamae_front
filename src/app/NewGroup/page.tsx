@@ -66,7 +66,11 @@ function NewGroup() {
 				<div className="flex flex-row justify-center w-full mt-10 space-x-3">
 					<div className="w-[100px] h-[100px] rounded-full overflow-hidden flex justify-center items-center border border-black">
 						<Image
-							src={file ? URL.createObjectURL(file) : ''}
+							src={
+								file
+									? URL.createObjectURL(file)
+									: 'https://kaotonamae.s3.ap-northeast-1.amazonaws.com/fish.png'
+							}
 							alt="groupIcon"
 							width={100}
 							height={100}
@@ -112,6 +116,14 @@ function NewGroup() {
 							</span>
 						)}
 					</div>
+					<Button
+						type="button"
+						onClick={() => {
+							console.log('友達リスト');
+						}}
+					>
+						友達リスト
+					</Button>
 					<Button
 						type="submit"
 						className="w-5/6 mt-[18px] bg-green-500 hover:bg-green-200"
