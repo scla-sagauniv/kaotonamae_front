@@ -96,6 +96,15 @@ function EditGroup() {
 						)}
 					</div>
 					<Button
+						type="button"
+						className="w-5/6 mt-[18px] bg-green-500 hover:bg-green-200"
+						onClick={() => {
+							router.push(`/EditGroupMembers/${group_id}`);
+						}}
+					>
+						メンバー編集
+					</Button>
+					<Button
 						type="submit"
 						className="w-5/6 mt-[18px] bg-green-500 hover:bg-green-200"
 					>
