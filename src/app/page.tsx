@@ -8,14 +8,12 @@ import { GroupType } from '@/types/index';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { useMyInfoStore } from '@/store/myInfoStore';
 import { fetchGroups } from '@/services/grouoService';
 import Image from 'next/image';
 
 export default function Home() {
 	const router = useRouter();
 	const { setOneTimePassFalse } = useOneTimePassStore();
-	const { setMyId } = useMyInfoStore();
 	const [objects, setObjects] = useState<GroupType[]>([]);
 	const [error, setError] = useState<string | null>(null);
 	const [groupNum, setGroupNum] = useState<number>(0);
@@ -23,13 +21,6 @@ export default function Home() {
 
 	useEffect(() => {
 		setOneTimePassFalse();
-		const setMyUserId = async () => {
-			const { userId } = await getCurrentUser();
-			console.log('userId: ', userId);
-			setMyId(userId);
-		};
-		setMyUserId();
-
 		const loadGroups = async () => {
 			const { userId } = await getCurrentUser();
 			setUserId(userId);
